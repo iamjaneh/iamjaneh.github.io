@@ -1,314 +1,236 @@
 <!DOCTYPE html>
-<html lang="zh-TW">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Peter & Jane's Wedding Day</title>
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;500&family=Noto+Serif+TC:wght@300;400;500&family=Pinyon+Script&display=swap" rel="stylesheet">
+<html>
+<title>Chia Chen Hsieh | System Analyst, HRIS Specialist</title>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+<link rel='stylesheet' href='https://fonts.googleapis.com/css?family=Roboto'>
+<link rel='stylesheet' href='https://fonts.googleapis.com/css?family=Noto Sans TC'>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+<style>
+html,body,h1,h2,h3,h4,h5,h6 {font-family: "Roboto", "Noto Sans TC", 微軟正黑體, "Microsoft JhengHei", sans-serif}
+</style>
+<body class="w3-light-grey">
+
+<header class="w3-container w3-teal w3-center w3-padding">
+  <div class="w3-large w3-padding w3-right">
+    <div class="w3-dropdown-hover">
+      <button class="w3-button w3-teal fa fa-globe"> Languages</button>
+      <div class="w3-dropdown-content w3-bar-block">
+        <a href="index_tw.html" class="w3-bar-item w3-button w3-hover-teal">繁體中文</a>
+        <a href="index.html" class="w3-bar-item w3-button w3-hover-teal">English</a>
+        <a href="index_jp.html" class="w3-bar-item w3-button w3-hover-teal">日本語</a>
+      </div>
+    </div>
+  </div>
+</header>
+
+<!-- Page Container -->
+<div class="w3-content w3-margin-top" style="max-width:1400px;">
+
+  <!-- The Grid -->
+  <div class="w3-row-padding">
+  
+    <!-- Left Column -->
+    <div class="w3-third">
     
-    <style>
-        :root {
-            --bg-color: #faf9f6;          /* 米白/象牙色背景 */
-            --text-dark: #2c2c2c;         /* 深灰接近黑的主文字 */
-            --text-muted: #7a7a7a;        /* 輔助灰色文字 */
-            --accent-color: rgb(242, 96, 118); /* 你指定的點綴粉色 */
-            --accent-hover: rgb(220, 80, 100);
-        }
-
-        * {
-            box-sizing: border-box;
-            margin: 0;
-            padding: 0;
-        }
-
-        body {
-            font-family: 'Noto Serif TC', serif;
-            background-color: var(--bg-color);
-            color: var(--text-dark);
-            line-height: 1.8;
-            letter-spacing: 0.12em;
-            text-align: center;
-        }
-
-        /* 導覽列 */
-        nav {
-            padding: 30px 0;
-            font-family: 'Cinzel', serif;
-            font-size: 0.8rem;
-        }
-        nav a {
-            text-decoration: none;
-            color: var(--text-muted);
-            margin: 0 15px;
-            transition: color 0.3s;
-        }
-        nav a:hover {
-            color: var(--accent-color);
-        }
-
-        /* 頁首英文字體風 */
-        .script-title {
-            font-family: 'Pinyon Script', cursive;
-            font-size: 3.5rem;
-            color: var(--accent-color); /* 用點綴色突顯手寫感 */
-            margin-top: 40px;
-            letter-spacing: 0;
-        }
-
-        .main-names {
-            font-family: 'Cinzel', serif;
-            font-size: 2.2rem;
-            font-weight: 400;
-            margin: 20px 0;
-            color: var(--text-dark);
-        }
-
-        .sub-info {
-            font-family: 'Cinzel', serif;
-            font-size: 0.85rem;
-            color: var(--text-muted);
-            margin-bottom: 40px;
-        }
-
-        /* 倒數計時器 */
-        .countdown-container {
-            display: flex;
-            justify-content: center;
-            gap: 30px;
-            margin: 30px auto;
-            max-width: 500px;
-        }
-        .countdown-item {
-            flex: 1;
-        }
-        .countdown-number {
-            font-family: 'Cinzel', serif;
-            font-size: 2rem;
-            font-weight: 500;
-            color: var(--text-dark);
-        }
-        .countdown-label {
-            font-size: 0.75rem;
-            color: var(--text-muted);
-            margin-top: 5px;
-        }
-
-        /* 婚紗大圖區域 */
-        .photo-hero {
-            width: 85%;
-            max-width: 800px;
-            margin: 0 auto 60px auto;
-            overflow: hidden;
-            box-shadow: 0 4px 15px rgba(0,0,0,0.02);
-        }
-        .photo-hero img {
-            width: 100%;
-            height: auto;
-            display: block;
-            filter: grayscale(10%); /* 保留微感色彩不至於太死板 */
-            transition: transform 0.8s;
-        }
-        .photo-hero img:hover {
-            transform: scale(1.02);
-        }
-
-        /* 重要資訊區塊區隔線 */
-        .divider {
-            width: 1px;
-            height: 60px;
-            background-color: var(--accent-color); /* 改用粉色細線，雅致不突兀 */
-            margin: 40px auto;
-        }
-
-        /* 婚宴詳情 */
-        .details-section {
-            padding: 40px 20px;
-        }
-        .section-title {
-            font-family: 'Cinzel', serif;
-            font-size: 1.2rem;
-            color: var(--text-muted);
-            margin-bottom: 20px;
-        }
-        .time-location {
-            font-size: 1.1rem;
-            font-weight: 400;
-            margin-bottom: 15px;
-        }
-        .address-detail {
-            font-size: 0.9rem;
-            color: var(--text-muted);
-            margin-bottom: 30px;
-        }
-
-        /* 按鈕樣式 */
-        .btn {
-            display: inline-block;
-            background-color: var(--text-dark);
-            color: #ffffff;
-            padding: 12px 35px;
-            text-decoration: none;
-            font-size: 0.85rem;
-            letter-spacing: 0.2em;
-            transition: all 0.3s ease;
-            border: 1px solid var(--text-dark);
-        }
-        .btn:hover {
-            background-color: var(--accent-color);
-            border-color: var(--accent-color);
-        }
-        .btn-secondary {
-            background-color: transparent;
-            color: var(--text-dark);
-            margin-top: 15px;
-        }
-        .btn-secondary:hover {
-            background-color: transparent;
-            color: var(--accent-color);
-            border-color: var(--accent-color);
-        }
-
-        /* 頁尾 */
-        footer {
-            padding: 80px 0 40px 0;
-            font-size: 0.75rem;
-            color: var(--text-muted);
-            font-family: 'Cinzel', serif;
-        }
-
-        /* 手機板響應式優化 */
-        @media (max-width: 768px) {
-            .main-names { font-size: 1.8rem; }
-            .script-title { font-size: 2.8rem; }
-            nav a { margin: 0 8px; font-size: 0.75rem; }
-            .countdown-container { gap: 15px; }
-            .countdown-number { font-size: 1.5rem; }
-        }
-    </style>
-</head>
-<body>
-
-    <div class="script-title">Our Wedding Day</div>
-
-    <h1 class="main-names">陳品霖 + 謝佳臻</h1>
-    <div class="sub-info">PETER & JANE</div>
-    
-<!-- 第一視覺：核心婚禮資訊區塊 -->
-    <div style="margin: 25px 0 45px 0; border-top: 1px solid rgba(242, 96, 118, 0.3); border-bottom: 1px solid rgba(242, 96, 118, 0.3); padding: 25px 0; background-color: rgba(255, 255, 255, 0.5);">
-        <!-- 西式大日期 -->
-        <div style="font-family: 'Cinzel', serif; font-size: 1.3rem; letter-spacing: 0.15em; font-weight: 500; color: var(--text-dark); margin-bottom: 8px;">
-            SEPTEMBER 19, 2026
+      <div class="w3-white w3-text-grey w3-card-4">
+        <div class="w3-display-container">
+          <img src="profile-photo.png" style="width:75%; aspect-ratio: 1/1; object-fit: cover; border-radius: 50%; border: 4px solid #fff; box-shadow: 0 4px 10px rgba(0,0,0,0.15);" alt="Avatar">
+          <div class="w3-display-bottomleft w3-container w3-text-black"></div>
         </div>
-        <!-- 中文日期時間 -->
-        <div style="font-size: 1.05rem; font-weight: 400; color: var(--text-dark); margin-bottom: 12px; letter-spacing: 0.15em;">
-            2026 年 9 月 19 日 <span style="color: var(--accent-color);">星期六 上午 11:30</span>
-        </div>
-        <!-- 核心地點 -->
-        <div style="font-size: 1.1rem; font-weight: 500; color: var(--text-dark); letter-spacing: 0.1em;">
-            台中勤美洲際酒店 <span style="font-family: 'Cinzel', serif; font-size: 0.85rem; color: var(--text-muted); display: block; margin-top: 4px; font-weight: 400;">InterContinental Taichung</span>
-        </div>
-    </div>
+        <div class="w3-container">
+          <h2 class="w3-text-black">謝 佳臻</h2>
+          <h3>Hsieh Chia-Chen</h3>
+          <p><i class="fa fa-briefcase fa-fw w3-margin-right w3-large w3-text-teal"></i>System Analyst, HRIS Specialist</p>
+          <p><i class="fa fa-home fa-fw w3-margin-right w3-large w3-text-teal"></i>Taiwan</p>
+          <p><i class="fa fa-envelope fa-fw w3-margin-right w3-large w3-text-teal"></i>chiachen.hsieh93@gmail.com</p>
+          <p><i class="fa fa-github fa-fw w3-margin-right w3-large w3-text-teal"></i><a href="https://github.com/iamjaneh">iamjaneh</a></p>
+          <hr>
 
-    <nav>
-        <a href="#details">婚宴時間</a>
-        <a href="#location">交通資訊</a>
-        <a href="#rsvp">出席回覆</a>
-    </nav>
+          <p class="w3-large"><b><i class="fa fa-laptop fa-fw w3-margin-right w3-text-teal"></i>Skills</b></p>
+          <p>System & Application Analysis</p>
+          <div class="w3-light-grey w3-round-xlarge w3-small">
+            <div class="w3-container w3-center w3-round-xlarge w3-teal" style="width:95%">95%</div>
+          </div>
+          <p>HRIS Implementation & Management</p>
+          <div class="w3-light-grey w3-round-xlarge w3-small">
+            <div class="w3-container w3-center w3-round-xlarge w3-teal" style="width:95%">95%</div>
+          </div>
+          <p>Oracle ERP & Supplier Portal</p>
+          <div class="w3-light-grey w3-round-xlarge w3-small">
+            <div class="w3-container w3-center w3-round-xlarge w3-teal" style="width:90%">90%</div>
+          </div>
+          <p>Database(SQL)</p>
+          <div class="w3-light-grey w3-round-xlarge w3-small">
+            <div class="w3-container w3-center w3-round-xlarge w3-teal" style="width:90%">
+              <div class="w3-center w3-text-white">90%</div>
+            </div>
+          </div>
+          <p>Java Programming</p>
+          <div class="w3-light-grey w3-round-xlarge w3-small">
+            <div class="w3-container w3-center w3-round-xlarge w3-teal" style="width:85%">85%</div>
+          </div>
+          <p>Web Development</p>
+          <div class="w3-light-grey w3-round-xlarge w3-small">
+            <div class="w3-container w3-center w3-round-xlarge w3-teal" style="width:85%">85%</div>
+          </div>
+          <br>
 
-    <div class="countdown-container">
-        <div class="countdown-item">
-            <div class="countdown-number" id="days">00</div>
-            <div class="countdown-label">DAYS</div>
-        </div>
-        <div class="countdown-item">
-            <div class="countdown-number" id="hours">00</div>
-            <div class="countdown-label">HOURS</div>
-        </div>
-        <div class="countdown-item">
-            <div class="countdown-number" id="minutes">00</div>
-            <div class="countdown-label">MINS</div>
-        </div>
-        <div class="countdown-item">
-            <div class="countdown-number" id="seconds">00</div>
-            <div class="countdown-label">SECS</div>
-        </div>
-    </div>
-
-    <div class="photo-hero">
-        <img src="wedding-photo.jpg" alt="Peter & Jane Wedding Photo" onerror="this.src='https://images.unsplash.com/photo-1519741497674-611481863552?auto=format&fit=crop&w=1200&q=80'">
-    </div>
-
-    <div class="divider"></div>
-
-    <section class="details-section" id="details">
-        <div class="section-title">WEDDING BANQUET</div>
-        <div class="time-location">
-            2026 年 9 月 19 日 星期六<br>
-            上午 11:30 迎賓酒會 & 入席
-        </div>
-
-        <div class="time-location" style="color: var(--accent-color); font-weight: 500; margin-top: 20px;">
-            台中勤美洲際酒店
-        </div>
-        <div class="address-detail">
-            台中市西區臺灣大道二段 432 號
-        </div>
-
-        <div class="address-detail" style="max-width: 500px; margin: 20px auto; font-size: 0.85rem; border-top: 1px dashed var(--accent-color); padding-top: 15px;">
-            <p>【停車資訊】</p>
-            <p>賓客可停放於台中勤美洲際酒店地下停車場。</p>
-            <p>婚宴賓客享免費停車優惠至當日晚間 12:00。</p>
-            <p style="font-size: 0.8rem; color: var(--accent-color);">* 停車位有限，將依停車場現場剩餘車位提供，敬請見諒。</p>
+          <p class="w3-large w3-text-theme"><b><i class="fa fa-globe fa-fw w3-margin-right w3-text-teal"></i>Languages</b></p>
+          <p>Chinese Mandarin</p>
+          <div class="w3-light-grey w3-round-xlarge">
+            <div class="w3-center w3-round-xlarge w3-teal" style="height:24px;width:100%">Native</div>
+          </div>
+          <p>Taiwanese</p>
+          <div class="w3-light-grey w3-round-xlarge">
+            <div class="w3-center w3-round-xlarge w3-teal" style="height:24px;width:100%">Native</div>
+          </div>
+          <p>English</p>
+          <div class="w3-light-grey w3-round-xlarge">
+            <div class="w3-center w3-round-xlarge w3-teal" style="height:24px;width:90%">Toeic 890</div>
+          </div>
+          <p>Japanese</p>
+          <div class="w3-light-grey w3-round-xlarge">
+            <div class="w3-center w3-round-xlarge w3-teal" style="height:24px;width:80%">JLPT N2</div>
+          </div>
+          <br>
         </div>
         
-        <a href="https://maps.google.com/?q=台中勤美洲際酒店" target="_blank" class="btn btn-secondary" id="location">Google 地圖導航</a>
-    
-    </section>
-
-    <div class="divider"></div>
-
-    <section class="details-section" id="rsvp">
-        <div class="section-title">RSVP</div>
-        <div class="time-location" style="font-size: 1rem; max-width: 500px; margin: 0 auto 30px auto; padding: 0 20px; color: var(--text-muted);">
-            為了方便安排婚宴座位，請於 2026 年 8 月 15 日前填寫出席意願表單，期待與您分享我們的喜悅。
+        <div class="w3-center">
+        <p class="w3-large w3-text-theme"><b>SKILL TAGS</b></p>
+        <span class="w3-tag w3-round w3-teal w3-text-white w3-margin-bottom">Java</span>
+        <span class="w3-tag w3-round w3-teal w3-text-white w3-margin-bottom">HTML</span>
+        <span class="w3-tag w3-round w3-teal w3-text-white w3-margin-bottom">CSS</span>
+        <span class="w3-tag w3-round w3-teal w3-text-white w3-margin-bottom">JavaScript</span>
+        <br>
+        <span class="w3-tag w3-round w3-teal w3-text-white w3-margin-bottom">Oracle ERP</span>
+        <span class="w3-tag w3-round w3-teal w3-text-white w3-margin-bottom">Supplier Portal</span>
+        <span class="w3-tag w3-round w3-teal w3-text-white w3-margin-bottom">Cloud-Based Solutions</span>
+        <br>
+        <span class="w3-tag w3-round w3-teal w3-text-white w3-margin-bottom">HRIS</span>
+        <span class="w3-tag w3-round w3-teal w3-text-white w3-margin-bottom">SuccessFactors</span>
+        <span class="w3-tag w3-round w3-teal w3-text-white w3-margin-bottom">HR Systems Integration</span>
+        <br>
+        <span class="w3-tag w3-round w3-teal w3-text-white w3-margin-bottom">SQL Server / Oracle Database</span>
+        <span class="w3-tag w3-round w3-teal w3-text-white w3-margin-bottom">Data Migration & ETL</span>
+        <br>
+        <span class="w3-tag w3-round w3-teal w3-text-white w3-margin-bottom">Microsoft Azure Cloud</span>
+        <span class="w3-tag w3-round w3-teal w3-text-white w3-margin-bottom">API Integration</span>
+        <br>
+        <span class="w3-tag w3-round w3-teal w3-text-white w3-margin-bottom">Cross-functional Collaboration</span>
+        <span class="w3-tag w3-round w3-teal w3-text-white w3-margin-bottom">Chinese Mandarin Native</span>
+        <br>
+        <span class="w3-tag w3-round w3-teal w3-text-white w3-margin-bottom">English Toeic 890</span>
+        <span class="w3-tag w3-round w3-teal w3-text-white w3-margin-bottom">Janpanese JLPT N2</span>
         </div>
-        
-        <a href="https://forms.google.com" target="_blank" class="btn">填寫出席回覆</a>
-    </section>
+  
+      </div><br>
 
-    <footer>
-        &copy; 2026 PETER & JANE. ALL RIGHTS RESERVED.
-    </footer>
+    <!-- End Left Column -->
+    </div>
 
-    <script>
-        // 設定婚禮目標時間 (2026年9月19日 11:30 AM)
-        const weddingDate = new Date("September 19, 2026 11:30:00").getTime();
+    <!-- Right Column -->
+    <div class="w3-twothird">
+      <div class="w3-container w3-card w3-white w3-margin-bottom">
+        <h2 class="w3-text-grey w3-padding-16"><i class="fa fa-briefcase fa-fw w3-margin-right w3-xxlarge w3-text-teal"></i>Work Experience</h2>
+        <div class="w3-container">
+          <h5><b>Techtrionic Industries (TTI) / Fully Remote(WFH) Taichung, Taiwan</b></h5>
+          <h6 class="w3-text-teal"><i class="fa fa-calendar fa-fw w3-margin-right"></i>July 2025 - Now</h6>
+          <h6 class="w3-opacity"><b>Senior System Analyst</b></h6>
+          <h6 class="w3-opacity"><b>Oracle ERP & Global Supplier Portal</b></h6>
+          <ul style="list-style-type:disc;">
+            <li>iSP 2.0 Digital Transformation: Led the rollout planning and business coordination for the Oracle Fusion-based iSupplier Portal (iSP 2.0), supporting supplier onboarding, account management, and MFA implementation.</li>
+            <li>Supplier Portal Enhancement: Redesigned supplier account management workflows and improved user experience by introducing standardized registration and approval processes.</li>
+            <li>Global Supplier Training: Created multilingual training materials and user guides for suppliers across different regions, supporting successful adoption of new business processes.</li>
+            <li>ASN Rollout: Coordinated the implementation of the ASN module for Mexico suppliers, including user communication, training, UAT, and post-go-live support.</li>
+            <li>Lead business requirement analysis and translate operational needs into system solutions for ERP and supplier portal initiatives.</li>
+            <li>Drive cross-functional collaboration with Procurement, Supply Chain, Finance, and regional IT teams to improve business processes and system adoption.</li>
+            <li>Support Oracle EBS and Oracle Fusion–related initiatives, including supplier management, account administration, and business workflow optimization.</li>
+          </ul>
+          <hr>
+        </div>
+        <div class="w3-container">
+          <h5><b>Universal Scientific Industrial Company (ASE Group) / Nantou, Taiwan</b></h5>
+          <h6 class="w3-text-teal"><i class="fa fa-calendar fa-fw w3-margin-right"></i>July 2020 - Mar 2024</h6>
+          <h6 class="w3-opacity"><b>Advance Software Engineer</b></h6>
+          <h6 class="w3-opacity"><b>Global IT Project & HR Employee Data Management</b></h6>
+          <ul style="list-style-type:disc;">
+            <li>Led SuccessFactors HR system implementation across Taiwan, China, Mexico, and Vietnam, ensuring seamless integration and compliance with local regulations.</li>
+            <li>Designed, developed, and implemented the global recruiting platform solution for company-wide hiring processes.</li>
+            <li>Managed over 20,000 employee records, utilizing SQL Server and Oracle for data storage, retrieval, and analysis.</li>
+            <li>Served as a Global IT team member, responsible for employee data management and integration across multiple regions. Led project management efforts, coordinating cross-functional teams to ensure on-time delivery of HR and IT solutions.</li>
+            <li>Managed Microsoft Azure Cloud infrastructure, ensuring system stability, security, and performance optimization.</li>
+          </ul>
+          <hr>
+        </div>
+      </div>
 
-        const timer = setInterval(function() {
-            const now = new Date().getTime();
-            const distance = weddingDate - now;
+      <div class="w3-container w3-card w3-white w3-margin-bottom">
+        <h2 class="w3-text-grey w3-padding-16"><i class="fa fa-graduation-cap fa-fw w3-margin-right w3-xxlarge w3-text-teal"></i>Education</h2>
+        <div class="w3-container">
+          <h5><b>Queen Mary University of London / London, UK</b></h5>
+          <h6 class="w3-text-teal"><i class="fa fa-calendar fa-fw w3-margin-right"></i>Sept 2017 - Oct 2018</h6>
+          <h6 class="w3-opacity"><b>MSc Computing and Information Systems</b></h6>
+          <ul style="list-style-type:disc;">
+            <li>Higher International Science and Engineering Scholarship Award (£5,000)</li>
+            <li>Module: IT Programming (Java), Information Systems, Database Systems, Cloud Computing, Data Analytics (Python), Security and Authentication</li>
+          </ul>
+          <hr>
+        </div>
+        <div class="w3-container">
+          <h5><b>Chung Yuan Christian University / Taoyuan, Taiwan</b></h5>
+          <h6 class="w3-text-teal"><i class="fa fa-calendar fa-fw w3-margin-right"></i>Sept 2012 - June 2016</h6>
+          <h6 class="w3-opacity"><b>Bachelor of Business Administration: Information Management</b></h6>
+          <ul style="list-style-type:disc;">
+            <li>GPA: 3.86/4.0 (Top 9%)</li>
+            <li>Module: Objected-Oriented Programming (Java, C#), Data Structure, Database Management, Calculus, Linear Algebra, Statistics, Information Management, System Analysis and Design, Software Project Management</li>
+            <li>Friendship Ambassador - Chinese Language and Cultural Experience Program with Japanese Sister School</li>
+          </ul>
+        </div>
+      </div>
 
-            // 計算天、時、分、秒
-            const days = Math.floor(distance / (1000 * 60 * 60 * 24));
-            const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
-            const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
-            const seconds = Math.floor((distance % (1000 * 60)) / 1000);
+      <div class="w3-container w3-card w3-white">
+        <h2 class="w3-text-grey w3-padding-16"><i class="fa fa-certificate fa-fw w3-margin-right w3-xxlarge w3-text-teal"></i>Project Experience</h2>
+        <div class="w3-container">
+          <h5><b>Development and Evaluation of Cloud-based Speech Control for the Mobile Robot</b></h5>
+          <h6 class="w3-text-teal"><i class="fa fa-calendar fa-fw w3-margin-right"></i>Apr 2018 - Sept 2018</h6>
+          <h6 class="w3-opacity"><i class="fa fa-map-marker fa-fw w3-margin-right"></i><b>Advanced Robotics @ Queen Mary (ARQ)</b></h6>
+          <ul style="list-style-type:disc;">
+            <li>Designed and implemented a multi robot control system which is able to control by voice by using Google speech cloud</li>
+            <li>Improving the methods for controlling the robots, and providing a safe and simple operational mode to enhance the willingness of individuals to use robots.</li>
+            <li>Using Google Cloud speech-to-text API, multi robot (GCtronic Elisa-3), JavaScript, Node.js, C++</li>
+          </ul>
+          <hr>
+        </div>
+        <div class="w3-container">
+          <h5><b>Data Analytics Coursework of 1.6 Million Accidents Traffic Flow in the UK over 16 Years</b></h5>
+          <h6 class="w3-text-teal"><i class="fa fa-calendar fa-fw w3-margin-right"></i>Mar 2018 - Apr 2018</h6>
+          <h6 class="w3-opacity"><i class="fa fa-map-marker fa-fw w3-margin-right"></i><b>Computer Science Department of QMUL</b></h6>
+          <ul style="list-style-type:disc;">
+            <li>Using the traffic accidents data given by Kaggle website which is recorded by the UK police forces to do the data analysis.</li>
+            <li>Present the data analysis results in a descriptive statistic aspect, time series analysis perspective, heat map analysis, and the map of traffic accidents analysis to get a deeper understanding of the results data showed to us.</li>
+            <li>Using Python, JSON, Jupyter Notebook</li>
+          </ul>
+          <hr>
+        </div>
+      </div>
 
-            // 顯示結果
-            document.getElementById("days").innerHTML = days < 10 ? "0" + days : days;
-            document.getElementById("hours").innerHTML = hours < 10 ? "0" + hours : hours;
-            document.getElementById("minutes").innerHTML = minutes < 10 ? "0" + minutes : minutes;
-            document.getElementById("seconds").innerHTML = seconds < 10 ? "0" + seconds : seconds;
+    <!-- End Right Column -->
+    </div>
+    
+  <!-- End Grid -->
+  </div>
+  
+  <!-- End Page Container -->
+</div>
 
-            // 倒數結束時顯示
-            if (distance < 0) {
-                clearInterval(timer);
-                document.querySelector(".countdown-container").innerHTML = "<div class='time-location' style='color:var(--accent-color)'>Happy Wedding Day! Just Married!</div>";
-            }
-        }, 1000);
-    </script>
+<footer class="w3-container w3-teal w3-center w3-margin-top">
+  <p>A big teamworker!
+  <br>Proactive and cooperative team member in previous experience.
+  <br>Keen to obtain and improve skills with both general and global vision.</p>
+  <p>Copyright © Chia Chen Hsieh 2026 All rights reserved.</p>
+</footer>
 
-    </body>
+</body>
 </html>

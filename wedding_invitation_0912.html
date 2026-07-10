@@ -1,0 +1,315 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Peter & Jane's Wedding Day</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;500&family=Noto+Serif+TC:wght@300;400;500&family=Pinyon+Script&display=swap" rel="stylesheet">
+    
+    <style>
+        :root {
+            --bg-color: #faf9f6;          /* 米白/象牙色背景 */
+            --text-dark: #2c2c2c;         /* 深灰接近黑的主文字 */
+            --text-muted: #7a7a7a;        /* 輔助灰色文字 */
+            --accent-color: rgb(242, 96, 118); /* 你指定的點綴粉色 */
+            --accent-hover: rgb(220, 80, 100);
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: 'Noto Serif TC', serif;
+            background-color: var(--bg-color);
+            color: var(--text-dark);
+            line-height: 1.8;
+            letter-spacing: 0.12em;
+            text-align: center;
+        }
+
+        /* 導覽列 */
+        nav {
+            padding: 30px 0;
+            font-family: 'Cinzel', serif;
+            font-size: 0.8rem;
+        }
+        nav a {
+            text-decoration: none;
+            color: var(--text-muted);
+            margin: 0 15px;
+            transition: color 0.3s;
+        }
+        nav a:hover {
+            color: var(--accent-color);
+        }
+
+        /* 頁首英文字體風 */
+        .script-title {
+            font-family: 'Pinyon Script', cursive;
+            font-size: 3.5rem;
+            color: var(--accent-color); /* 用點綴色突顯手寫感 */
+            margin-top: 40px;
+            letter-spacing: 0;
+        }
+
+        .main-names {
+            font-family: 'Cinzel', serif;
+            font-size: 2.2rem;
+            font-weight: 400;
+            margin: 20px 0;
+            color: var(--text-dark);
+        }
+
+        .sub-info {
+            font-family: 'Cinzel', serif;
+            font-size: 0.85rem;
+            color: var(--text-muted);
+            margin-bottom: 40px;
+        }
+
+        /* 倒數計時器 */
+        .countdown-container {
+            display: flex;
+            justify-content: center;
+            gap: 30px;
+            margin: 30px auto;
+            max-width: 500px;
+        }
+        .countdown-item {
+            flex: 1;
+        }
+        .countdown-number {
+            font-family: 'Cinzel', serif;
+            font-size: 2rem;
+            font-weight: 500;
+            color: var(--text-dark);
+        }
+        .countdown-label {
+            font-size: 0.75rem;
+            color: var(--text-muted);
+            margin-top: 5px;
+        }
+
+        /* 婚紗大圖區域 */
+        .photo-hero {
+            width: 85%;
+            max-width: 800px;
+            margin: 0 auto 60px auto;
+            overflow: hidden;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.02);
+        }
+        .photo-hero img {
+            width: 100%;
+            height: auto;
+            display: block;
+            filter: grayscale(10%); /* 保留微感色彩不至於太死板 */
+            transition: transform 0.8s;
+        }
+        .photo-hero img:hover {
+            transform: scale(1.02);
+        }
+
+        /* 重要資訊區塊區隔線 */
+        .divider {
+            width: 1px;
+            height: 60px;
+            background-color: var(--accent-color); /* 改用粉色細線，雅致不突兀 */
+            margin: 40px auto;
+        }
+
+        /* 婚宴詳情 */
+        .details-section {
+            padding: 40px 20px;
+        }
+        .section-title {
+            font-family: 'Cinzel', serif;
+            font-size: 1.2rem;
+            color: var(--text-muted);
+            margin-bottom: 20px;
+        }
+        .time-location {
+            font-size: 1.1rem;
+            font-weight: 400;
+            margin-bottom: 15px;
+        }
+        .address-detail {
+            font-size: 0.9rem;
+            color: var(--text-muted);
+            margin-bottom: 30px;
+        }
+
+        /* 按鈕樣式 */
+        .btn {
+            display: inline-block;
+            background-color: var(--text-dark);
+            color: #ffffff;
+            padding: 12px 35px;
+            text-decoration: none;
+            font-size: 0.85rem;
+            letter-spacing: 0.2em;
+            transition: all 0.3s ease;
+            border: 1px solid var(--text-dark);
+        }
+        .btn:hover {
+            background-color: var(--accent-color);
+            border-color: var(--accent-color);
+        }
+        .btn-secondary {
+            background-color: transparent;
+            color: var(--text-dark);
+            margin-top: 15px;
+        }
+        .btn-secondary:hover {
+            background-color: transparent;
+            color: var(--accent-color);
+            border-color: var(--accent-color);
+        }
+
+        /* 頁尾 */
+        footer {
+            padding: 80px 0 40px 0;
+            font-size: 0.75rem;
+            color: var(--text-muted);
+            font-family: 'Cinzel', serif;
+        }
+
+        /* 手機板響應式優化 */
+        @media (max-width: 768px) {
+            .main-names { font-size: 1.8rem; }
+            .script-title { font-size: 2.8rem; }
+            nav a { margin: 0 8px; font-size: 0.75rem; }
+            .countdown-container { gap: 15px; }
+            .countdown-number { font-size: 1.5rem; }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="script-title">Our Wedding Day</div>
+
+    <!-- 主新人名字（中文） -->
+    <h1 class="main-names">陳品霖 + 謝佳臻</h1>
+
+    <!-- 導覽選單 -->
+    <nav>
+        <a href="#details">婚宴時間</a>
+        <a href="#location">交通資訊</a>
+        <a href="#rsvp">出席回覆</a>
+    </nav>
+
+    <!-- 結合婚紗照與核心資訊的全新 Hero 區塊 -->
+    <div style="position: relative; width: 85%; max-width: 800px; margin: 0 auto 60px auto;">
+        
+        <div style="width: 100%; overflow: hidden; border-radius: 200px 20px 120px 20px; box-shadow: 0 10px 30px rgba(0,0,0,0.05);">
+            <img src="wedding-photo-P.jpg" alt="Peter & Jane Wedding Photo" style="width: 100%; height: auto; display: block; filter: grayscale(10%); transition: transform 0.8s;" onerror="this.src='https://images.unsplash.com/photo-1519741497674-611481863552?auto=format&fit=crop&w=1200&q=80'">
+        </div>
+
+        <div style="position: absolute; bottom: -30px; left: 50%; transform: translateX(-50%); width: 90%; max-width: 650px; border-top: 1px solid rgba(242, 96, 118, 0.4); border-bottom: 1px solid rgba(242, 96, 118, 0.4); padding: 25px 15px; background-color: rgba(250, 249, 246, 0.7); backdrop-filter: blur(6px); -webkit-backdrop-filter: blur(6px); box-shadow: 0 8px 25px rgba(0,0,0,0.04); border-radius: 4px; z-index: 10;">
+            <div style="font-family: 'Cinzel', serif; font-size: 0.85rem; color: var(--text-muted); letter-spacing: 0.2em; margin-bottom: 12px;">PETER & JANE</div>
+            <div style="font-family: 'Cinzel', serif; font-size: 1.2rem; letter-spacing: 0.15em; font-weight: 500; color: var(--text-dark); margin-bottom: 6px;">SEPTEMBER 12, 2026</div>
+            <div style="font-size: 1rem; font-weight: 400; color: var(--text-dark); margin-bottom: 12px; letter-spacing: 0.15em;">2026 年 9 月 12 日 <span style="color: var(--accent-color); font-weight: 500;">星期六 下午 17:30</span></div>
+            <div style="font-size: 1.05rem; font-weight: 500; color: var(--text-dark); letter-spacing: 0.1em;">台北萬豪酒店 8F Garden Villa<span style="font-family: 'Cinzel', serif; font-size: 0.8rem; color: var(--text-muted); display: block; margin-top: 4px; font-weight: 400;">Taipei Marriott Hotel</span></div>
+        </div>
+
+    </div>
+    <div style="margin-top: 80px;"></div>
+
+    <!-- 倒數計時器 -->
+    <div class="countdown-container">
+        <div class="countdown-item">
+            <div class="countdown-number" id="days">00</div>
+            <div class="countdown-label">DAYS</div>
+        </div>
+        <div class="countdown-item">
+            <div class="countdown-number" id="hours">00</div>
+            <div class="countdown-label">HOURS</div>
+        </div>
+        <div class="countdown-item">
+            <div class="countdown-number" id="minutes">00</div>
+            <div class="countdown-label">MINS</div>
+        </div>
+        <div class="countdown-item">
+            <div class="countdown-number" id="seconds">00</div>
+            <div class="countdown-label">SECS</div>
+        </div>
+    </div>
+
+    <!-- 精緻粉色線條 -->
+    <div class="divider"></div>
+
+    <section class="details-section" id="details">
+        <div class="section-title">WEDDING BANQUET</div>
+        <div class="time-location">
+            2026 年 9 月 12 日 星期六<br>
+            下午 17:30 迎賓酒會 & 入席<br>
+            下午 18:00 準時開席
+        </div>
+
+        <div class="time-location" style="color: var(--accent-color); font-weight: 500; margin-top: 20px;">
+            台北萬豪酒店 8F Garden Villa 
+        </div>
+        <div class="address-detail">
+            台北市中山區樂群二路199號
+        </div>
+
+        <div class="address-detail" style="max-width: 500px; margin: 20px auto; font-size: 0.85rem; border-top: 1px dashed var(--accent-color); padding-top: 15px;">
+            <p>【停車資訊】</p>
+            <p>賓客可停放於台北萬豪酒店地下停車場。</p>
+            <p>婚宴賓客可折抵停車</p>
+            <p style="font-size: 0.8rem; color: var(--accent-color);">* 停車位有限，依現場剩餘車位提供，敬請見諒。</p>
+        </div>
+        
+        <a href="https://maps.app.goo.gl/E5sZLFyPyLrZ73w59" target="_blank" class="btn btn-secondary" id="location">Google 地圖導航</a>
+    
+    </section>
+
+    <div class="divider"></div>
+
+    <section class="details-section" id="rsvp">
+        <div class="section-title">RSVP</div>
+        <div class="time-location" style="font-size: 1rem; max-width: 500px; margin: 0 auto 30px auto; padding: 0 20px; color: var(--text-muted);">
+            為了方便安排婚宴座位，請於 2026 年 8 月 1 日前填寫出席意願表單，期待與您分享我們的喜悅。
+        </div>
+        
+        <a href="https://forms.gle/qzdd67AN3UYFDVPB7" target="_blank" class="btn">填寫出席回覆</a>
+    </section>
+
+    <footer>
+        &copy; 2026 PETER & JANE. ALL RIGHTS RESERVED.
+    </footer>
+
+    <script>
+        // 設定婚禮目標時間 (2026年9月12日 17:30 PM)
+        const weddingDate = new Date("September 12, 2026 17:30:00").getTime();
+
+        const timer = setInterval(function() {
+            const now = new Date().getTime();
+            const distance = weddingDate - now;
+
+            // 計算天、時、分、秒
+            const days = Math.floor(distance / (1000 * 60 * 60 * 24));
+            const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+            const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+            const seconds = Math.floor((distance % (1000 * 60)) / 1000);
+
+            // 顯示結果
+            document.getElementById("days").innerHTML = days < 10 ? "0" + days : days;
+            document.getElementById("hours").innerHTML = hours < 10 ? "0" + hours : hours;
+            document.getElementById("minutes").innerHTML = minutes < 10 ? "0" + minutes : minutes;
+            document.getElementById("seconds").innerHTML = seconds < 10 ? "0" + seconds : seconds;
+
+            // 倒數結束時顯示
+            if (distance < 0) {
+                clearInterval(timer);
+                document.querySelector(".countdown-container").innerHTML = "<div class='time-location' style='color:var(--accent-color)'>Happy Wedding Day! Just Married!</div>";
+            }
+        }, 1000);
+    </script>
+
+    </body>
+</html>
