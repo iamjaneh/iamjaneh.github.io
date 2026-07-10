@@ -185,6 +185,25 @@
             nav a { margin: 0 8px; font-size: 0.75rem; }
             .countdown-container { gap: 15px; }
             .countdown-number { font-size: 1.5rem; }
+
+            /* 手機版專屬：解除懸浮，改為在照片下方正常排列 */
+            .hero-container { margin-bottom: 30px !important; }
+            .floating-card {
+                position: relative !important;
+                bottom: 0 !important;
+                left: 0 !important;
+                transform: none !important;
+                width: 100% !important;
+                background-color: #ffffff !important; /* 手機版不懸浮，直接用純白底色最清晰 */
+                backdrop-filter: none !important;
+                -webkit-backdrop-filter: none !important;
+                box-shadow: none !important;
+                border-left: none !important;
+                border-right: none !important;
+                margin-top: 25px;
+                padding: 20px 0 !important;
+            }
+            .spacer-div { display: none; } /* 手機版不需要額外推擠間距 */
         }
     </style>
 </head>
@@ -203,21 +222,22 @@
     </nav>
 
     <!-- 結合婚紗照與核心資訊的全新 Hero 區塊 -->
-    <div style="position: relative; width: 85%; max-width: 800px; margin: 0 auto 60px auto;">
+    <div class="hero-container" style="position: relative; width: 85%; max-width: 800px; margin: 0 auto 60px auto;">
         
         <div style="width: 100%; overflow: hidden; border-radius: 200px 20px 120px 20px; box-shadow: 0 10px 30px rgba(0,0,0,0.05);">
             <img src="wedding-photo-J.jpg" alt="Peter & Jane Wedding Photo" style="width: 100%; height: auto; display: block; filter: grayscale(10%); transition: transform 0.8s;" onerror="this.src='https://images.unsplash.com/photo-1519741497674-611481863552?auto=format&fit=crop&w=1200&q=80'">
         </div>
 
-        <div style="position: absolute; bottom: -30px; left: 50%; transform: translateX(-50%); width: 90%; max-width: 650px; border-top: 1px solid rgba(242, 96, 118, 0.4); border-bottom: 1px solid rgba(242, 96, 118, 0.4); padding: 25px 15px; background-color: rgba(250, 249, 246, 0.7); backdrop-filter: blur(6px); -webkit-backdrop-filter: blur(6px); box-shadow: 0 8px 25px rgba(0,0,0,0.04); border-radius: 4px; z-index: 10;">
+        <div class="floating-card" style="position: absolute; bottom: -30px; left: 50%; transform: translateX(-50%); width: 90%; max-width: 650px; border-top: 1px solid rgba(242, 96, 118, 0.4); border-bottom: 1px solid rgba(242, 96, 118, 0.4); padding: 25px 15px; background-color: rgba(250, 249, 246, 0.7); backdrop-filter: blur(6px); -webkit-backdrop-filter: blur(6px); box-shadow: 0 8px 25px rgba(0,0,0,0.04); border-radius: 4px; z-index: 10;">
             <div style="font-family: 'Cinzel', serif; font-size: 0.85rem; color: var(--text-muted); letter-spacing: 0.2em; margin-bottom: 12px;">PETER & JANE</div>
             <div style="font-family: 'Cinzel', serif; font-size: 1.2rem; letter-spacing: 0.15em; font-weight: 500; color: var(--text-dark); margin-bottom: 6px;">SEPTEMBER 19, 2026</div>
             <div style="font-size: 1rem; font-weight: 400; color: var(--text-dark); margin-bottom: 12px; letter-spacing: 0.15em;">2026 年 9 月 19 日 <span style="color: var(--accent-color); font-weight: 500;">星期六 上午 11:30</span></div>
-            <div style="font-size: 1.05rem; font-weight: 500; color: var(--text-dark); letter-spacing: 0.1em;">台中勤美洲際酒店 <span style="font-family: 'Cinzel', serif; font-size: 0.8rem; color: var(--text-muted); display: block; margin-top: 4px; font-weight: 400;">InterContinental Taichung</span></div>
+            <div style="font-size: 1.05rem; font-weight: 500; color: var(--text-dark); letter-spacing: 0.1em;">台中勤美洲際酒店 3F<span style="font-family: 'Cinzel', serif; font-size: 0.8rem; color: var(--text-muted); display: block; margin-top: 4px; font-weight: 400;">InterContinental Taichung</span></div>
         </div>
 
     </div>
-    <div style="margin-top: 80px;"></div>
+    
+    <div class="spacer-div" style="margin-top: 80px;"></div>
 
     <!-- 倒數計時器 -->
     <div class="countdown-container">
