@@ -23,6 +23,7 @@
             --text-muted: #7a7a7a;        /* 輔助灰色文字 */
             --accent-color: rgb(242, 96, 118); /* 點綴粉色 */
             --accent-hover: rgb(220, 80, 100);
+            --card-bg: rgba(242, 96, 118, 0.08);
         }
 
         * {
@@ -180,21 +181,70 @@
             margin-bottom: 30px;
         }
 
-        /* ================= 左右滑動相簿 (Gallery Slider) ================= */
+        /* 座位查詢區塊與卡片樣式 */
+        .search-box-container {
+            max-width: 400px;
+            margin: 0 auto;
+            display: flex;
+            gap: 10px;
+            padding: 0 10px;
+        }
+        .search-input {
+            flex: 1;
+            padding: 12px 15px;
+            border: 1px solid var(--accent-color);
+            border-radius: 4px;
+            font-size: 0.95rem;
+            outline: none;
+            background: #ffffff;
+            transition: box-shadow 0.2s;
+        }
+        .search-input:focus {
+            box-shadow: 0 0 6px rgba(242, 96, 118, 0.3);
+        }
+        .seat-result-card {
+            background: var(--card-bg);
+            border: 1px solid var(--accent-color);
+            padding: 20px;
+            border-radius: 6px;
+            max-width: 400px;
+            margin: 15px auto 0 auto;
+            text-align: center;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.03);
+            animation: fadeIn 0.3s ease;
+        }
+        .seat-result-card + .seat-result-card {
+            margin-top: 15px;
+        }
+        .seat-table-highlight {
+            font-size: 1.2rem;
+            font-weight: 500;
+            color: var(--accent-color);
+            margin: 12px 0;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+        .seat-note {
+            font-size: 0.85rem;
+            color: var(--text-dark);
+            border-top: 1px dashed rgba(242,96,118,0.3);
+            padding-top: 10px;
+            margin-top: 10px;
+        }
+
+        /* 左右滑動相簿 (Gallery Slider) */
         .gallery-section {
             padding: 20px 20px 40px 20px;
             max-width: 900px;
             margin: 0 auto;
         }
-        
         .gallery-wrapper {
             position: relative;
             margin-top: 25px;
             display: flex;
             align-items: center;
         }
-
-        /* 左右按鈕 */
         .slider-btn {
             background-color: rgba(250, 249, 246, 0.9);
             border: 1px solid var(--accent-color);
@@ -222,7 +272,6 @@
         .slider-btn.prev { left: -15px; }
         .slider-btn.next { right: -15px; }
 
-        /* 相片滾動軌道 */
         .gallery-track {
             display: flex;
             gap: 20px;
@@ -231,16 +280,14 @@
             scroll-behavior: smooth;
             padding: 10px 5px 20px 5px;
             -webkit-overflow-scrolling: touch;
-            /* 隱藏滾動條 */
             scrollbar-width: none; /* Firefox */
         }
         .gallery-track::-webkit-scrollbar {
             display: none; /* Chrome / Safari */
         }
 
-        /* 每張相片卡片 */
         .gallery-item {
-            flex: 0 0 calc(50% - 10px); /* 桌機預設一次顯示兩張 */
+            flex: 0 0 calc(50% - 10px);
             scroll-snap-align: center;
             position: relative;
             overflow: hidden;
@@ -254,8 +301,7 @@
             width: 100%;
             height: 100%;
             object-fit: cover;
-            image-rendering: -webkit-optimize-contrast; 
-            image-rendering: high-quality;
+            transition: transform 0.4s ease, filter 0.4s ease;
         }
         .gallery-item:hover img {
             transform: scale(1.05);
@@ -277,7 +323,6 @@
             z-index: 2;
         }
 
-        /* 頁數提示 */
         .slider-counter {
             font-family: 'Cinzel', serif;
             font-size: 0.8rem;
@@ -347,12 +392,16 @@
             border-color: var(--accent-color);
         }
 
-        /* 頁尾 */
         footer {
             padding: 60px 0 40px 0;
             font-size: 0.75rem;
             color: var(--text-muted);
             font-family: 'Cinzel', serif;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(6px); }
+            to { opacity: 1; transform: translateY(0); }
         }
 
         /* RWD 響應式優化 */
@@ -378,7 +427,6 @@
                 padding: 20px 10px;
             }
 
-            /* 手機版一次呈現一張照片，左右滑動體驗最佳 */
             .gallery-item {
                 flex: 0 0 85%;
             }
@@ -475,15 +523,14 @@
         </div>
 
         <!-- 搜尋輸入框與按鈕 -->
-        <div style="max-width: 400px; margin: 0 auto; display: flex; gap: 10px; padding: 0 10px;">
-            <input type="text" id="guestNameInput" placeholder="輸入姓名或英文名（例：陳品霖 / Peter）" 
-                   onkeypress="if(event.key==='Enter') searchSeat()"
-                   style="flex: 1; padding: 12px 15px; border: 1px solid var(--accent-color); border-radius: 4px; font-size: 0.95rem; outline: none; background: #fff;">
+        <div class="search-box-container">
+            <input type="text" id="guestNameInput" class="search-input" placeholder="輸入姓名或英文名（例：謝佳臻 / Jane）" 
+                   onkeypress="if(event.key==='Enter') searchSeat()">
             <button onclick="searchSeat()" class="btn" id="searchBtn" style="padding: 12px 20px; white-space: nowrap;">查詢</button>
         </div>
 
         <!-- 查詢結果顯示區 -->
-        <div id="searchResult" style="margin-top: 25px; min-height: 50px;"></div>
+        <div id="searchResult" style="margin-top: 20px; min-height: 50px;"></div>
     </section>
 
     <div class="divider"></div>
@@ -500,51 +547,36 @@
 
             <!-- 滾動卡片區域 -->
             <div class="gallery-track" id="galleryTrack">
-                <!-- 第 1 張：電子喜帖 正面 -->
                 <div class="gallery-item" onclick="openLightbox(this)">
                     <span class="gallery-badge">INVITATION</span>
-                    <img src="invitation-front-0919.png" alt="電子喜帖 正面" onerror="this.src='https://images.unsplash.com/photo-1511285560929-80b456fea0bc?auto=format&fit=crop&w=800&q=80'">
+                    <img src="invitation-front-0919.png" loading="lazy" alt="電子喜帖 正面" onerror="this.src='https://images.unsplash.com/photo-1511285560929-80b456fea0bc?auto=format&fit=crop&w=800&q=80'">
                 </div>
-
-                <!-- 第 2 張：電子喜帖 內頁/背面 -->
                 <div class="gallery-item" onclick="openLightbox(this)">
                     <span class="gallery-badge">INVITATION</span>
-                    <img src="invitation-back-0919.png" alt="電子喜帖 內頁" onerror="this.src='https://images.unsplash.com/photo-1522673607200-164d1b6ce486?auto=format&fit=crop&w=800&q=80'">
+                    <img src="invitation-back-0919.png" loading="lazy" alt="電子喜帖 內頁" onerror="this.src='https://images.unsplash.com/photo-1522673607200-164d1b6ce486?auto=format&fit=crop&w=800&q=80'">
                 </div>
-
-                <!-- 第 3 張：精選婚紗照 1 -->
                 <div class="gallery-item" onclick="openLightbox(this)">
-                    <img src="wedding-photo-1.png" alt="婚紗照 1" onerror="this.src='https://images.unsplash.com/photo-1519741497674-611481863552?auto=format&fit=crop&w=800&q=80'">
+                    <img src="wedding-photo-1.png" loading="lazy" alt="婚紗照 1" onerror="this.src='https://images.unsplash.com/photo-1519741497674-611481863552?auto=format&fit=crop&w=800&q=80'">
                 </div>
-
-                <!-- 第 4 張：精選婚紗照 2 -->
                 <div class="gallery-item" onclick="openLightbox(this)">
-                    <img src="wedding-photo-2.png" alt="婚紗照 2" onerror="this.src='https://images.unsplash.com/photo-1583939003579-730e3918a45a?auto=format&fit=crop&w=800&q=80'">
+                    <img src="wedding-photo-2.png" loading="lazy" alt="婚紗照 2" onerror="this.src='https://images.unsplash.com/photo-1583939003579-730e3918a45a?auto=format&fit=crop&w=800&q=80'">
                 </div>
-
-                <!-- 第 5 張：精選婚紗照 3 -->
                 <div class="gallery-item" onclick="openLightbox(this)">
-                    <img src="wedding-photo-3.png" alt="婚紗照 3" onerror="this.src='https://images.unsplash.com/photo-1537633552985-df8429e8048b?auto=format&fit=crop&w=800&q=80'">
+                    <img src="wedding-photo-3.png" loading="lazy" alt="婚紗照 3" onerror="this.src='https://images.unsplash.com/photo-1537633552985-df8429e8048b?auto=format&fit=crop&w=800&q=80'">
                 </div>
-
-                <!-- 第 6 張：精選婚紗照 4 -->
                 <div class="gallery-item" onclick="openLightbox(this)">
-                    <img src="wedding-photo-4.png" alt="婚紗照 4" onerror="this.src='https://images.unsplash.com/photo-1606800052052-a08af7148866?auto=format&fit=crop&w=800&q=80'">
+                    <img src="wedding-photo-4.png" loading="lazy" alt="婚紗照 4" onerror="this.src='https://images.unsplash.com/photo-1606800052052-a08af7148866?auto=format&fit=crop&w=800&q=80'">
                 </div>
-
-                <!-- 第 7 張：精選婚紗照 5 -->
                 <div class="gallery-item" onclick="openLightbox(this)">
-                    <img src="wedding-photo-5.png" alt="婚紗照 5" onerror="this.src='https://images.unsplash.com/photo-1606800052052-a08af7148866?auto=format&fit=crop&w=800&q=80'">
+                    <img src="wedding-photo-5.png" loading="lazy" alt="婚紗照 5" onerror="this.src='https://images.unsplash.com/photo-1606800052052-a08af7148866?auto=format&fit=crop&w=800&q=80'">
                 </div>
-
-                <!-- 第 8 張：精選婚紗照 6 -->
                 <div class="gallery-item" onclick="openLightbox(this)">
-                    <img src="wedding-photo-6.png" alt="婚紗照 6" onerror="this.src='https://images.unsplash.com/photo-1606800052052-a08af7148866?auto=format&fit=crop&w=800&q=80'">
-                </div>               
+                    <img src="wedding-photo-6.png" loading="lazy" alt="婚紗照 6" onerror="this.src='https://images.unsplash.com/photo-1606800052052-a08af7148866?auto=format&fit=crop&w=800&q=80'">
+                </div>       
             </div>
         </div>
 
-        <div class="slider-counter" id="sliderCounter">1 / 6</div>
+        <div class="slider-counter" id="sliderCounter">1 / 8</div>
     </section>
 
     <!-- Lightbox 大圖彈窗 HTML 結構 -->
@@ -574,7 +606,7 @@
     const weddingDate = new Date("2026-09-19T11:30:00").getTime();
 
     function updateCountdown() {
-        const now = new Date().getTime();
+        const now = Date.now();
         const distance = weddingDate - now;
 
         if (distance < 0) {
@@ -603,6 +635,9 @@
     const items = document.querySelectorAll('.gallery-item');
     const totalItems = items.length;
 
+    // 初始化動態設定總張數
+    counter.innerText = `1 / ${totalItems}`;
+
     function scrollGallery(direction) {
         const itemWidth = items[0].offsetWidth + 20; // 卡片寬度 + 間距
         track.scrollBy({
@@ -611,13 +646,20 @@
         });
     }
 
-    // 監聽滾動以動態更新頁數提示
+    // 監聽滾動以動態更新頁數提示（使用 requestAnimationFrame 防抖優化）
+    let isTicking = false;
     track.addEventListener('scroll', () => {
-        const itemWidth = items[0].offsetWidth + 20;
-        let currentIndex = Math.round(track.scrollLeft / itemWidth) + 1;
-        if (currentIndex < 1) currentIndex = 1;
-        if (currentIndex > totalItems) currentIndex = totalItems;
-        counter.innerText = `${currentIndex} / ${totalItems}`;
+        if (!isTicking) {
+            window.requestAnimationFrame(() => {
+                const itemWidth = items[0].offsetWidth + 20;
+                let currentIndex = Math.round(track.scrollLeft / itemWidth) + 1;
+                if (currentIndex < 1) currentIndex = 1;
+                if (currentIndex > totalItems) currentIndex = totalItems;
+                counter.innerText = `${currentIndex} / ${totalItems}`;
+                isTicking = false;
+            });
+            isTicking = true;
+        }
     });
 
     // Lightbox 放大大圖功能
@@ -631,44 +673,35 @@
         document.getElementById('lightbox').style.display = 'none';
     }
 
-    // 按 Esc 鍵也可關閉大圖
     document.addEventListener('keydown', function(event) {
         if (event.key === "Escape") {
             closeLightbox();
         }
     });
 
-    // ================= Google Sheets 串接與模糊搜尋 =================
-    const SPREADSHEET_ID = "16Mb3xfhXl7dagvJpNGGFm6FayRC5qMhzqtrQep8awRk"; 
-    const SHEET_NAME = "0919"; 
+    // 賓客名單與座位資料
+    const seatingData = [
+        { name: "陳品霖", alias: "Peter", table: "主桌", note: "舞台正前方" },
+        { name: "謝佳臻", alias: "Jane Hsieh", table: "男方親友 2 桌", note: "面對舞台左側" },
+        { name: "陳大華", alias: "May", table: "大學同學 1 桌", note: "面對舞台右側" },
+        { name: "劉環嘉", alias: "David", table: "女方同事USI 14桌", note: "近入口處" },
+        { name: "蔡升偉", alias: "Will", table: "女方同事USI 14桌", note: "近入口處" },
+        { name: "楊峻明", alias: "Andy Yang", table: "女方同事USI 14桌", note: "近入口處" },
+        { name: "Paul Leung", alias: "", table: "女方同事TTI 15桌", note: "近入口處" },
+        { name: "廖育賢", alias: "Harry Liao", table: "女方同事TTI 15桌", note: "近入口處" },
+        { name: "楊勝富", alias: "ShengFu", table: "女方同事TTI 15桌", note: "近入口處" },
+        { name: "邱俊福", alias: "Dan Chiu", table: "女方同事TTI 15桌", note: "近入口處" },
+        { name: "徐子皓", alias: "Daniel Hsu", table: "女方同事TTI 15桌", note: "近入口處" },
+        { name: "呂佳勳", alias: "Andy Lu", table: "女方同事TTI 15桌", note: "近入口處" },
+        { name: "林郁倩", alias: "Kelly Lin", table: "女方同事TTI 15桌", note: "近入口處" },
+        { name: "林靖恩", alias: "Jocelyn", table: "女方同事TTI 15桌", note: "近入口處" },
+        { name: "池田麻衣", alias: "Mai", table: "女方大學同學 17桌", note: "近入口處" }
+    ];
 
-    let seatingDataCache = null; // 儲存快取資料
-
-    // 從 API 抓取 Google Sheets 資料
-    async function fetchSeatingData() {
-        if (seatingDataCache) return seatingDataCache;
-
-        // ⭕ 已修正：正確帶入變數或字串格式
-        const url = `https://opensheet.elk.sh/${SPREADSHEET_ID}/${SHEET_NAME}`;
-        
-        try {
-            const response = await fetch(url);
-            if (!response.ok) throw new Error("網路回應不成功");
-            const data = await response.json();
-            seatingDataCache = data;
-            return data;
-        } catch (error) {
-            console.error("無法讀取 Google Sheets 資料:", error);
-            return null;
-        }
-    }
-
-    // 模糊搜尋核心邏輯 (中英文、不分大小寫、部分關鍵字匹配)
-    async function searchSeat() {
+    // 搜尋核心邏輯 (支援多筆匹配、大小寫不限)
+    function searchSeat() {
         const inputEl = document.getElementById('guestNameInput');
         const resultDiv = document.getElementById('searchResult');
-        const searchBtn = document.getElementById('searchBtn');
-        
         const query = inputEl.value.trim().toLowerCase();
 
         if (!query) {
@@ -676,48 +709,35 @@
             return;
         }
 
-        // 顯示載入狀態
-        searchBtn.disabled = true;
-        resultDiv.innerHTML = `<div style="color: var(--text-muted); font-size: 0.9rem;">正在搜尋座位資料...</div>`;
-
-        const data = await fetchSeatingData();
-        searchBtn.disabled = false;
-
-        if (!data) {
-            resultDiv.innerHTML = `
-                <div style="color: var(--text-muted); font-size: 0.9rem;">
-                    系統暫時無法連線至試算表，請確認 Google Sheet 已設定為「知道連結的人皆可檢視」，或洽現場工作人員。
-                </div>`;
-            return;
-        }
-
-        // 比對 name (中文) 或 alias (英文/別名)
-        const match = data.find(guest => {
-            const name = (guest.name || '').toString().toLowerCase();
-            const alias = (guest.alias || '').toString().toLowerCase();
+        // 搜尋匹配項目
+        const matches = seatingData.filter(guest => {
+            const name = (guest.name || '').toLowerCase();
+            const alias = (guest.alias || '').toLowerCase();
             return name.includes(query) || alias.includes(query);
         });
 
         // 渲染結果
-        if (match) {
-            const displayName = match.alias 
-                ? `${match.name} <span style="font-size:0.85em; font-weight:normal; color:var(--text-muted);">(${match.alias})</span>`
-                : match.name;
+        if (matches.length > 0) {
+            resultDiv.innerHTML = matches.map(match => {
+                const displayName = match.alias 
+                    ? `${match.name || ''} <span style="font-size:0.85em; font-weight:normal; color:var(--text-muted);">(${match.alias})</span>`
+                    : match.name;
 
-            resultDiv.innerHTML = `
-                <div style="background: rgba(242, 96, 118, 0.08); border: 1px solid var(--accent-color); padding: 20px; border-radius: 6px; max-width: 400px; margin: 0 auto; text-align: center; box-shadow: 0 4px 15px rgba(0,0,0,0.03);">
-                    <div style="font-size: 0.9rem; color: var(--text-muted);">親愛的 <strong>${displayName}</strong> 您好：</div>
-                    <div style="font-size: 1.3rem; font-weight: 500; color: var(--accent-color); margin: 12px 0;">
-                        您的桌號為：【 ${match.table || '確認中'} 】
+                return `
+                    <div class="seat-result-card">
+                        <div style="font-size: 0.9rem; color: var(--text-muted);">親愛的 <strong>${displayName}</strong> 您好：</div>
+                        <div class="seat-table-highlight">
+                            您的桌號為：【 ${match.table || '確認中'} 】
+                        </div>
+                        ${match.note ? `<div class="seat-note">📍 位置指引：${match.note}</div>` : ''}
                     </div>
-                    ${match.note ? `<div style="font-size: 0.85rem; color: var(--text-dark); border-top: 1px dashed rgba(242,96,118,0.3); padding-top: 10px; margin-top: 10px;">📍 位置指引：${match.note}</div>` : ''}
-                </div>
-            `;
+                `;
+            }).join('');
         } else {
             resultDiv.innerHTML = `
                 <div style="color: var(--text-muted); font-size: 0.9rem; max-width: 400px; margin: 0 auto;">
                     查無「<strong>${inputEl.value.trim()}</strong>」的座位資訊。<br>
-                    <span style="font-size: 0.8rem; display: block; margin-top: 5px;">請嘗試輸入中文全名、英文名（例：Peter），或洽現場接待人員。</span>
+                    <span style="font-size: 0.8rem; display: block; margin-top: 5px;">請嘗試輸入中文全名、英文名，或洽現場接待人員。</span>
                 </div>
             `;
         }
