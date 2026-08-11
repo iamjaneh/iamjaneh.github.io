@@ -569,161 +569,160 @@
         &copy; 2026 PETER & JANE. ALL RIGHTS RESERVED.
     </footer>
 
-    <script>
-        // 設定婚禮目標時間 (2026年9月19日 11:30 AM)
-        const weddingDate = new Date("2026-09-19T11:30:00").getTime();
+<script>
+    // 設定婚禮目標時間 (2026年9月19日 11:30 AM)
+    const weddingDate = new Date("2026-09-19T11:30:00").getTime();
 
-        function updateCountdown() {
-            const now = new Date().getTime();
-            const distance = weddingDate - now;
+    function updateCountdown() {
+        const now = new Date().getTime();
+        const distance = weddingDate - now;
 
-            if (distance < 0) {
-                document.querySelector(".countdown-container").innerHTML = 
-                    "<div class='time-location' style='color:var(--accent-color); font-weight:500;'>Happy Wedding Day! Just Married!</div>";
-                return;
-            }
-
-            const days = Math.floor(distance / (1000 * 60 * 60 * 24));
-            const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
-            const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
-            const seconds = Math.floor((distance % (1000 * 60)) / 1000);
-
-            document.getElementById("days").innerText = String(days).padStart(2, '0');
-            document.getElementById("hours").innerText = String(hours).padStart(2, '0');
-            document.getElementById("minutes").innerText = String(minutes).padStart(2, '0');
-            document.getElementById("seconds").innerText = String(seconds).padStart(2, '0');
+        if (distance < 0) {
+            document.querySelector(".countdown-container").innerHTML = 
+                "<div class='time-location' style='color:var(--accent-color); font-weight:500;'>Happy Wedding Day! Just Married!</div>";
+            return;
         }
 
-        updateCountdown();
-        setInterval(updateCountdown, 1000);
+        const days = Math.floor(distance / (1000 * 60 * 60 * 24));
+        const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+        const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+        const seconds = Math.floor((distance % (1000 * 60)) / 1000);
 
-        // ================= 左右滑動 Slider 功能 =================
-        const track = document.getElementById('galleryTrack');
-        const counter = document.getElementById('sliderCounter');
-        const items = document.querySelectorAll('.gallery-item');
-        const totalItems = items.length;
+        document.getElementById("days").innerText = String(days).padStart(2, '0');
+        document.getElementById("hours").innerText = String(hours).padStart(2, '0');
+        document.getElementById("minutes").innerText = String(minutes).padStart(2, '0');
+        document.getElementById("seconds").innerText = String(seconds).padStart(2, '0');
+    }
 
-        function scrollGallery(direction) {
-            const itemWidth = items[0].offsetWidth + 20; // 卡片寬度 + 間距
-            track.scrollBy({
-                left: direction * itemWidth,
-                behavior: 'smooth'
-            });
+    updateCountdown();
+    setInterval(updateCountdown, 1000);
+
+    // ================= 左右滑動 Slider 功能 =================
+    const track = document.getElementById('galleryTrack');
+    const counter = document.getElementById('sliderCounter');
+    const items = document.querySelectorAll('.gallery-item');
+    const totalItems = items.length;
+
+    function scrollGallery(direction) {
+        const itemWidth = items[0].offsetWidth + 20; // 卡片寬度 + 間距
+        track.scrollBy({
+            left: direction * itemWidth,
+            behavior: 'smooth'
+        });
+    }
+
+    // 監聽滾動以動態更新頁數提示
+    track.addEventListener('scroll', () => {
+        const itemWidth = items[0].offsetWidth + 20;
+        let currentIndex = Math.round(track.scrollLeft / itemWidth) + 1;
+        if (currentIndex < 1) currentIndex = 1;
+        if (currentIndex > totalItems) currentIndex = totalItems;
+        counter.innerText = `${currentIndex} / ${totalItems}`;
+    });
+
+    // Lightbox 放大大圖功能
+    function openLightbox(element) {
+        const imgSrc = element.querySelector('img').src;
+        document.getElementById('lightbox-img').src = imgSrc;
+        document.getElementById('lightbox').style.display = 'flex';
+    }
+
+    function closeLightbox() {
+        document.getElementById('lightbox').style.display = 'none';
+    }
+
+    // 按 Esc 鍵也可關閉大圖
+    document.addEventListener('keydown', function(event) {
+        if (event.key === "Escape") {
+            closeLightbox();
+        }
+    });
+
+    // ================= Google Sheets 串接與模糊搜尋 =================
+    const SPREADSHEET_ID = "16Mb3xfhXl7dagvJpNGGFm6FayRC5qMhzqtrQep8awRk"; 
+    const SHEET_NAME = "0919"; 
+
+    let seatingDataCache = null; // 儲存快取資料
+
+    // 從 API 抓取 Google Sheets 資料
+    async function fetchSeatingData() {
+        if (seatingDataCache) return seatingDataCache;
+
+        // ⭕ 已修正：正確帶入變數或字串格式
+        const url = `https://opensheet.elk.sh/${SPREADSHEET_ID}/${SHEET_NAME}`;
+        
+        try {
+            const response = await fetch(url);
+            if (!response.ok) throw new Error("網路回應不成功");
+            const data = await response.json();
+            seatingDataCache = data;
+            return data;
+        } catch (error) {
+            console.error("無法讀取 Google Sheets 資料:", error);
+            return null;
+        }
+    }
+
+    // 模糊搜尋核心邏輯 (中英文、不分大小寫、部分關鍵字匹配)
+    async function searchSeat() {
+        const inputEl = document.getElementById('guestNameInput');
+        const resultDiv = document.getElementById('searchResult');
+        const searchBtn = document.getElementById('searchBtn');
+        
+        const query = inputEl.value.trim().toLowerCase();
+
+        if (!query) {
+            resultDiv.innerHTML = `<div style="color: var(--accent-color); font-size: 0.9rem;">請先輸入姓名或英文名字喔！</div>`;
+            return;
         }
 
-        // 監聽滾動以動態更新頁數提示 (1 / 6)
-        track.addEventListener('scroll', () => {
-            const itemWidth = items[0].offsetWidth + 20;
-            let currentIndex = Math.round(track.scrollLeft / itemWidth) + 1;
-            if (currentIndex < 1) currentIndex = 1;
-            if (currentIndex > totalItems) currentIndex = totalItems;
-            counter.innerText = `${currentIndex} / ${totalItems}`;
+        // 顯示載入狀態
+        searchBtn.disabled = true;
+        resultDiv.innerHTML = `<div style="color: var(--text-muted); font-size: 0.9rem;">正在搜尋座位資料...</div>`;
+
+        const data = await fetchSeatingData();
+        searchBtn.disabled = false;
+
+        if (!data) {
+            resultDiv.innerHTML = `
+                <div style="color: var(--text-muted); font-size: 0.9rem;">
+                    系統暫時無法連線至試算表，請確認 Google Sheet 已設定為「知道連結的人皆可檢視」，或洽現場工作人員。
+                </div>`;
+            return;
+        }
+
+        // 比對 name (中文) 或 alias (英文/別名)
+        const match = data.find(guest => {
+            const name = (guest.name || '').toString().toLowerCase();
+            const alias = (guest.alias || '').toString().toLowerCase();
+            return name.includes(query) || alias.includes(query);
         });
 
-        // Lightbox 放大大圖功能
-        function openLightbox(element) {
-            const imgSrc = element.querySelector('img').src;
-            document.getElementById('lightbox-img').src = imgSrc;
-            document.getElementById('lightbox').style.display = 'flex';
-        }
+        // 渲染結果
+        if (match) {
+            const displayName = match.alias 
+                ? `${match.name} <span style="font-size:0.85em; font-weight:normal; color:var(--text-muted);">(${match.alias})</span>`
+                : match.name;
 
-        function closeLightbox() {
-            document.getElementById('lightbox').style.display = 'none';
-        }
-
-        // 按 Esc 鍵也可關閉大圖
-        document.addEventListener('keydown', function(event) {
-            if (event.key === "Escape") {
-                closeLightbox();
-            }
-        });
-
-// ================= Google Sheets 串接與模糊搜尋 =================
-        // ⚠️ 請將下方替換為你的 Google 試算表 ID
-        const SPREADSHEET_ID = "16Mb3xfhXl7dagvJpNGGFm6FayRC5qMhzqtrQep8awRk"; 
-        const SHEET_NAME = "0919"; // 若試算表下方的頁籤有改名，這裡需同步
-
-        let seatingDataCache = null; // 儲存快取資料，避免每次搜尋都重複請求 API
-
-        // 從 API 抓取 Google Sheets 資料
-        async function fetchSeatingData() {
-            if (seatingDataCache) return seatingDataCache;
-
-            const url = `https://opensheet.elk.sh/${16Mb3xfhXl7dagvJpNGGFm6FayRC5qMhzqtrQep8awRk}/${0919}`;
-            
-            try {
-                const response = await fetch(url);
-                if (!response.ok) throw new Error("網路回應不成功");
-                const data = await response.json();
-                seatingDataCache = data;
-                return data;
-            } catch (error) {
-                console.error("無法讀取 Google Sheets 資料:", error);
-                return null;
-            }
-        }
-
-        // 模糊搜尋核心邏輯 (中英文、不分大小寫、部分關鍵字匹配)
-        async function searchSeat() {
-            const inputEl = document.getElementById('guestNameInput');
-            const resultDiv = document.getElementById('searchResult');
-            const searchBtn = document.getElementById('searchBtn');
-            
-            // 清除使用者輸入的前後空白並轉成小寫
-            const query = inputEl.value.trim().toLowerCase();
-
-            if (!query) {
-                resultDiv.innerHTML = `<div style="color: var(--accent-color); font-size: 0.9rem;">請先輸入姓名或英文名字喔！</div>`;
-                return;
-            }
-
-            // 顯示載入狀態
-            searchBtn.disabled = true;
-            resultDiv.innerHTML = `<div style="color: var(--text-muted); font-size: 0.9rem;">正在搜尋座位資料...</div>`;
-
-            const data = await fetchSeatingData();
-            searchBtn.disabled = false;
-
-            if (!data) {
-                resultDiv.innerHTML = `
-                    <div style="color: var(--text-muted); font-size: 0.9rem;">
-                        系統暫時無法連線至試算表，請稍後再試，或洽現場工作人員。
-                    </div>`;
-                return;
-            }
-
-            // 比對 name (中文) 或 alias (英文/別名)
-            const match = data.find(guest => {
-                const name = (guest.name || '').toString().toLowerCase();
-                const alias = (guest.alias || '').toString().toLowerCase();
-                return name.includes(query) || alias.includes(query);
-            });
-
-            // 渲染結果
-            if (match) {
-                const displayName = match.alias 
-                    ? `${match.name} <span style="font-size:0.85em; font-weight:normal; color:var(--text-muted);">(${match.alias})</span>`
-                    : match.name;
-
-                resultDiv.innerHTML = `
-                    <div style="background: rgba(242, 96, 118, 0.08); border: 1px solid var(--accent-color); padding: 20px; border-radius: 6px; max-width: 400px; margin: 0 auto; text-align: center; box-shadow: 0 4px 15px rgba(0,0,0,0.03);">
-                        <div style="font-size: 0.9rem; color: var(--text-muted);">親愛的 <strong>${displayName}</strong> 您好：</div>
-                        <div style="font-size: 1.3rem; font-weight: 500; color: var(--accent-color); margin: 12px 0;">
-                            您的桌號為：【 ${match.table || '確認中'} 】
-                        </div>
-                        ${match.note ? `<div style="font-size: 0.85rem; color: var(--text-dark); border-top: 1px dashed rgba(242,96,118,0.3); padding-top: 10px; margin-top: 10px;">📍 位置指引：${match.note}</div>` : ''}
+            resultDiv.innerHTML = `
+                <div style="background: rgba(242, 96, 118, 0.08); border: 1px solid var(--accent-color); padding: 20px; border-radius: 6px; max-width: 400px; margin: 0 auto; text-align: center; box-shadow: 0 4px 15px rgba(0,0,0,0.03);">
+                    <div style="font-size: 0.9rem; color: var(--text-muted);">親愛的 <strong>${displayName}</strong> 您好：</div>
+                    <div style="font-size: 1.3rem; font-weight: 500; color: var(--accent-color); margin: 12px 0;">
+                        您的桌號為：【 ${match.table || '確認中'} 】
                     </div>
-                `;
-            } else {
-                resultDiv.innerHTML = `
-                    <div style="color: var(--text-muted); font-size: 0.9rem; max-width: 400px; margin: 0 auto;">
-                        查無「<strong>${inputEl.value.trim()}</strong>」的座位資訊。<br>
-                        <span style="font-size: 0.8rem; display: block; margin-top: 5px;">請嘗試輸入中文全名、英文名（例：Peter），或洽現場接待人員。</span>
-                    </div>
-                `;
-            }
-        }        
-    </script>
+                    ${match.note ? `<div style="font-size: 0.85rem; color: var(--text-dark); border-top: 1px dashed rgba(242,96,118,0.3); padding-top: 10px; margin-top: 10px;">📍 位置指引：${match.note}</div>` : ''}
+                </div>
+            `;
+        } else {
+            resultDiv.innerHTML = `
+                <div style="color: var(--text-muted); font-size: 0.9rem; max-width: 400px; margin: 0 auto;">
+                    查無「<strong>${inputEl.value.trim()}</strong>」的座位資訊。<br>
+                    <span style="font-size: 0.8rem; display: block; margin-top: 5px;">請嘗試輸入中文全名、英文名（例：Peter），或洽現場接待人員。</span>
+                </div>
+            `;
+        }
+    }        
+</script>
 
 </body>
 </html>
