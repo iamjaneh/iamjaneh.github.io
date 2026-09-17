@@ -229,6 +229,42 @@
             padding-top: 10px;
             margin-top: 10px;
         }
+        /* 全廳座位圖專用樣式 */
+        .seating-map-container {
+            position: relative;
+            max-width: 600px;
+            margin: 0 auto;
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.08);
+            border: 1px solid rgba(242, 96, 118, 0.3);
+            cursor: pointer;
+            background-color: #ffffff;
+        }
+        
+        .seating-map-container img {
+            width: 100%;
+            height: auto;
+            display: block;
+            transition: transform 0.3s ease;
+        }
+        
+        .seating-map-container:hover img {
+            transform: scale(1.02);
+        }
+        
+        .map-overlay-hint {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            background: rgba(44, 44, 44, 0.75);
+            color: #ffffff;
+            font-size: 0.85rem;
+            padding: 8px 0;
+            text-align: center;
+            backdrop-filter: blur(4px);
+        }
 
         /* 左右滑動相簿 (Gallery Slider) */
         .gallery-section {
@@ -439,8 +475,8 @@
         <a href="#details">婚宴時間</a>
         <a href="#location">交通資訊</a>
         <a href="#seating">座位查詢</a>
+        <a href="#map">宴會廳座位圖</a>
         <a href="#gallery">婚紗相簿</a>
-        <a href="#rsvp">出席回覆</a>
     </nav>
 
     <div class="script-title">Our Wedding Day</div>
@@ -532,6 +568,27 @@
 
     <div class="divider"></div>
 
+    <section class="details-section" id="map">
+        <div class="section-title">SEATING CHART</div>
+        <div style="font-size: 0.85rem; color: var(--text-muted); margin-bottom: 20px;">
+            點擊圖片可放大查看高清全廳配置圖
+        </div>
+
+        <!-- 座位圖容器 -->
+        <div class="seating-map-container" onclick="openMapLightbox()">
+            <img src="婚禮座位圖_高清大圖輸出.jpg" alt="婚禮全廳座位圖" id="seatingMapImg">
+            <div class="map-overlay-hint">🔍 點擊放大查看高清地圖</div>
+        </div>
+    </section>
+
+    <!-- 3. 座位圖專用 Lightbox 彈窗 -->
+    <div id="mapLightbox" class="lightbox" onclick="closeMapLightbox()">
+        <span class="lightbox-close">&times;</span>
+        <img src="wedding-seating-plan.jpg" alt="婚禮全廳座位圖放大" style="max-height: 90vh;">
+    </div>
+
+    <div class="divider"></div>
+
     <!-- 2. 左右滑動婚紗相簿 (#gallery) -->
     <section class="gallery-section" id="gallery">
         <div class="section-title">PORTRAITS & INVITATIONS</div>
@@ -583,16 +640,6 @@
     </div>
 
     <div class="divider"></div>
-
-    <!-- 3. RSVP 出席回覆區塊 (#rsvp) -->
-    <section class="details-section" id="rsvp">
-        <div class="section-title">RSVP</div>
-        <div class="time-location" style="font-size: 1rem; max-width: 500px; margin: 0 auto 30px auto; padding: 0 20px; color: var(--text-muted);">
-            為了方便安排婚宴座位，請於 <strong>2026 年 8 月 10 日</strong> 前填寫出席意願表單，期待與您分享我們的喜悅。
-        </div>
-        
-        <a href="https://forms.gle/VRqqnhT7yAKD6GVV9" target="_blank" rel="noopener noreferrer" class="btn">填寫出席回覆</a>
-    </section>
 
     <footer>
         &copy; 2026 PETER & JANE. ALL RIGHTS RESERVED.
@@ -675,6 +722,15 @@
             closeLightbox();
         }
     });
+
+    // 座位圖 Lightbox 控制
+    function openMapLightbox() {
+        document.getElementById('mapLightbox').style.display = 'flex';
+    }
+    
+    function closeMapLightbox() {
+        document.getElementById('mapLightbox').style.display = 'none';
+    }
 
     // 賓客名單與座位資料
     const seatingData = [
