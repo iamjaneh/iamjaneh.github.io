@@ -181,55 +181,6 @@
             margin-bottom: 30px;
         }
 
-        /* 座位查詢區塊與卡片樣式 */
-        .search-box-container {
-            max-width: 400px;
-            margin: 0 auto;
-            display: flex;
-            gap: 10px;
-            padding: 0 10px;
-        }
-        .search-input {
-            flex: 1;
-            padding: 12px 15px;
-            border: 1px solid var(--accent-color);
-            border-radius: 4px;
-            font-size: 0.95rem;
-            outline: none;
-            background: #ffffff;
-            transition: box-shadow 0.2s;
-        }
-        .search-input:focus {
-            box-shadow: 0 0 6px rgba(242, 96, 118, 0.3);
-        }
-        .seat-result-card {
-            background: var(--card-bg);
-            border: 1px solid var(--accent-color);
-            padding: 20px;
-            border-radius: 6px;
-            max-width: 400px;
-            margin: 15px auto 0 auto;
-            text-align: center;
-            box-shadow: 0 4px 15px rgba(0,0,0,0.03);
-            animation: fadeIn 0.3s ease;
-        }
-        .seat-result-card + .seat-result-card {
-            margin-top: 15px;
-        }
-        .seat-table-highlight {
-            font-size: 1.2rem;
-            font-weight: 500;
-            color: var(--accent-color);
-            margin: 12px 0;
-        }
-        .seat-note {
-            font-size: 0.85rem;
-            color: var(--text-dark);
-            border-top: 1px dashed rgba(242,96,118,0.3);
-            padding-top: 10px;
-            margin-top: 10px;
-        }
-
         /* 左右滑動相簿 (Gallery Slider) */
         .gallery-section {
             padding: 20px 20px 40px 20px;
@@ -443,9 +394,7 @@
     <nav>
         <a href="#details">婚宴時間</a>
         <a href="#location">交通資訊</a>
-        <a href="#seating">座位查詢</a>
         <a href="#gallery">婚紗相簿</a>
-        <a href="#rsvp">出席回覆</a>
     </nav>
 
     <div class="script-title">Our Wedding Day</div>
@@ -517,26 +466,6 @@
 
     <div class="divider"></div>
 
-    <!-- 座位查詢區塊 (#seating) -->
-    <section class="details-section" id="seating">
-        <div class="section-title">FIND YOUR SEAT</div>
-        <div style="font-size: 0.9rem; color: var(--text-muted); margin-bottom: 20px;">
-            請輸入您的中文姓名或英文名字查詢桌號與座位
-        </div>
-
-        <!-- 搜尋輸入框與按鈕 -->
-        <div class="search-box-container">
-            <input type="text" id="guestNameInput" class="search-input" placeholder="輸入姓名或英文名（例：陳品霖 / Peter）" 
-                   onkeypress="if(event.key==='Enter') searchSeat()">
-            <button onclick="searchSeat()" class="btn" id="searchBtn" style="padding: 12px 20px; white-space: nowrap;">查詢</button>
-        </div>
-
-        <!-- 查詢結果顯示區 -->
-        <div id="searchResult" style="margin-top: 20px; min-height: 50px;"></div>
-    </section>
-
-    <div class="divider"></div>
-
     <!-- 2. 左右滑動婚紗相簿 (#gallery) -->
     <section class="gallery-section" id="gallery">
         <div class="section-title">PORTRAITS & INVITATIONS</div>
@@ -586,18 +515,6 @@
         <span class="lightbox-close">&times;</span>
         <img id="lightbox-img" src="" alt="Enlarged wedding photo">
     </div>
-
-    <div class="divider"></div>
-
-    <!-- 3. RSVP 出席回覆區塊 (#rsvp) -->
-    <section class="details-section" id="rsvp">
-        <div class="section-title">RSVP</div>
-        <div class="time-location" style="font-size: 1rem; max-width: 500px; margin: 0 auto 30px auto; padding: 0 20px; color: var(--text-muted);">
-            為了方便安排婚宴座位，請於 <strong>2026 年 8 月 10 日</strong> 前填寫出席意願表單，期待與您分享我們的喜悅。
-        </div>
-        
-        <a href="https://forms.gle/qzdd67AN3UYFDVPB7" target="_blank" rel="noopener noreferrer" class="btn">填寫出席回覆</a>
-    </section>
 
     <footer>
         &copy; 2026 PETER & JANE. ALL RIGHTS RESERVED.
@@ -680,245 +597,7 @@
             closeLightbox();
         }
     });
-
-    // 賓客名單與座位資料
-    const seatingData = [
-        { name: "陳品霖", alias: "Peter", table: "主桌", note: "舞台正前方" },
-        { name: "陳之文", alias: "", table: "主桌", note: "舞台正前方" },
-        { name: "馮惠美", alias: "", table: "主桌", note: "舞台正前方" },
-        { name: "陳水益", alias: "", table: "主桌", note: "舞台正前方" },
-        { name: "陳永東", alias: "", table: "主桌", note: "舞台正前方" },
-        { name: "馮致中", alias: "", table: "主桌", note: "舞台正前方" },
-        { name: "謝佳臻", alias: "", table: "主桌", note: "舞台正前方" },
-        { name: "謝咨安", alias: "", table: "主桌", note: "舞台正前方" },
-        { name: "蘇芳美", alias: "", table: "主桌", note: "舞台正前方" },
-        { name: "蘇政義", alias: "", table: "主桌", note: "舞台正前方" },
-        { name: "謝資彬", alias: "", table: "主桌", note: "舞台正前方" },
-        { name: "吳素月", alias: "", table: "主桌", note: "舞台正前方" },
-        { name: "陳怡卉", alias: "", table: "第1桌", note: "面對舞台右側，靠近舞台" },
-        { name: "蔡碧雲", alias: "", table: "第1桌", note: "面對舞台右側，靠近舞台" },
-        { name: "陳孝哲", alias: "", table: "第1桌", note: "面對舞台右側，靠近舞台" },
-        { name: "李思嫻", alias: "", table: "第1桌", note: "面對舞台右側，靠近舞台" },
-        { name: "陳宥穎", alias: "", table: "第1桌", note: "面對舞台右側，靠近舞台" },
-        { name: "陳柏褆", alias: "", table: "第1桌", note: "面對舞台右側，靠近舞台" },
-        { name: "陳孝榮", alias: "", table: "第1桌", note: "面對舞台右側，靠近舞台" },
-        { name: "陳孝剛", alias: "", table: "第1桌", note: "面對舞台右側，靠近舞台" },
-        { name: "翁石藏", alias: "", table: "第1桌", note: "面對舞台右側，靠近舞台" },
-        { name: "黃秀梨", alias: "", table: "第1桌", note: "面對舞台右側，靠近舞台" },
-        { name: "林光穫", alias: "", table: "第2桌", note: "面對舞台左側，靠近舞台" },
-        { name: "林承慶", alias: "", table: "第2桌", note: "面對舞台左側，靠近舞台" },
-        { name: "楊明山", alias: "", table: "第2桌", note: "面對舞台左側，靠近舞台" },
-        { name: "陳士彬", alias: "", table: "第2桌", note: "面對舞台左側，靠近舞台" },
-        { name: "丁為", alias: "", table: "第2桌", note: "面對舞台左側，靠近舞台" },
-        { name: "王邦正", alias: "", table: "第2桌", note: "面對舞台左側，靠近舞台" },
-        { name: "呂翰章", alias: "", table: "第3桌", note: "面對舞台右側，中段" },
-        { name: "吳曉維", alias: "", table: "第3桌", note: "面對舞台右側，中段" },
-        { name: "吳昱陞", alias: "", table: "第3桌", note: "面對舞台右側，中段" },
-        { name: "林原生", alias: "", table: "第3桌", note: "面對舞台右側，中段" },
-        { name: "施柔安", alias: "", table: "第3桌", note: "面對舞台右側，中段" },
-        { name: "劉祐辰", alias: "", table: "第3桌", note: "面對舞台右側，中段" },
-        { name: "吳家丞", alias: "", table: "第5桌", note: "面對舞台右側，近入口處" },
-        { name: "翁楷鑫", alias: "", table: "第5桌", note: "面對舞台右側，近入口處" },
-        { name: "陳郁心", alias: "", table: "第5桌", note: "面對舞台右側，近入口處" },
-        { name: "翁旻皓", alias: "", table: "第5桌", note: "面對舞台右側，近入口處" },
-        { name: "林憲鋒", alias: "", table: "第5桌", note: "面對舞台右側，近入口處" },
-        { name: "謝旻峰", alias: "", table: "第5桌", note: "面對舞台右側，近入口處" },
-        { name: "乾哥", alias: "", table: "第5桌", note: "面對舞台右側，近入口處" },
-        { name: "羅文圻", alias: "", table: "第5桌", note: "面對舞台右側，近入口處" },
-        { name: "吳雅萱", alias: "", table: "第5桌", note: "面對舞台右側，近入口處" },
-        { name: "張晏銘", alias: "", table: "第6桌", note: "面對舞台左側，中段" },
-        { name: "林柏諭", alias: "", table: "第6桌", note: "面對舞台左側，中段" },
-        { name: "李承易", alias: "", table: "第6桌", note: "面對舞台左側，中段" },
-        { name: "蘇亮穎", alias: "", table: "第6桌", note: "面對舞台左側，中段" },
-        { name: "徐英皓", alias: "", table: "第6桌", note: "面對舞台左側，中段" },
-        { name: "林苡齡", alias: "", table: "第6桌", note: "面對舞台左側，中段" },
-        { name: "莊富凱", alias: "", table: "第6桌", note: "面對舞台左側，中段" },
-        { name: "蘇心俞", alias: "", table: "第6桌", note: "面對舞台左側，中段" },
-        { name: "沈仲為", alias: "", table: "第6桌", note: "面對舞台左側，中段" },
-        { name: "吳佩蓉", alias: "", table: "第6桌", note: "面對舞台左側，中段" },
-        { name: "周心嫻", alias: "二伯母", table: "第7桌", note: "面對舞台右側，靠近舞台" },
-        { name: "陳慧姍", alias: "", table: "第7桌", note: "面對舞台右側，靠近舞台" },
-        { name: "陳穎儀", alias: "", table: "第7桌", note: "面對舞台右側，靠近舞台" },
-        { name: "陳瑋謙", alias: "", table: "第7桌", note: "面對舞台右側，靠近舞台" },
-        { name: "徐鵬鈞", alias: "", table: "第8桌", note: "面對舞台左側，近入口處" },
-        { name: "姜富丞", alias: "", table: "第8桌", note: "面對舞台左側，近入口處" },
-        { name: "羅于盛", alias: "", table: "第8桌", note: "面對舞台左側，近入口處" },
-        { name: "楊淯茗", alias: "", table: "第8桌", note: "面對舞台左側，近入口處" },
-        { name: "羅美薰", alias: "", table: "第9桌", note: "面對舞台右側，中段" },
-        { name: "吳王淑真", alias: "", table: "第9桌", note: "面對舞台右側，中段" },
-        { name: "呂美妹", alias: "", table: "第9桌", note: "面對舞台右側，中段" },
-        { name: "吳素月", alias: "大伯母", table: "第10桌", note: "面對舞台左側，靠近舞台" },
-        { name: "謝資沂", alias: "二伯", table: "第10桌", note: "面對舞台左側，靠近舞台" },
-        { name: "白霜芬", alias: "二伯母", table: "第10桌", note: "面對舞台左側，靠近舞台" },
-        { name: "謝資鎮", alias: "三伯", table: "第10桌", note: "面對舞台左側，靠近舞台" },
-        { name: "謝逸澤", alias: "", table: "第10桌", note: "面對舞台左側，靠近舞台" },
-        { name: "謝麗美", alias: "大姑", table: "第10桌", note: "面對舞台左側，靠近舞台" },
-        { name: "謝麗君", alias: "小姑", table: "第10桌", note: "面對舞台左側，靠近舞台" },
-        { name: "馬鳳娥", alias: "", table: "第10桌", note: "面對舞台左側，靠近舞台" },
-        { name: "謝丞宏", alias: "", table: "第10桌", note: "面對舞台左側，靠近舞台" },
-        { name: "謝宗煒", alias: "", table: "第10桌", note: "面對舞台左側，靠近舞台" },
-        { name: "林瑞雯", alias: "老師", table: "第11桌", note: "面對舞台右側，中段" },
-        { name: "吳承翰", alias: "", table: "第11桌", note: "面對舞台右側，中段" },
-        { name: "莊為羽", alias: "", table: "第11桌", note: "面對舞台右側，中段" },
-        { name: "楊庭瑄", alias: "", table: "第11桌", note: "面對舞台右側，中段" },
-        { name: "劉威汎", alias: "", table: "第11桌", note: "面對舞台右側，中段" },
-        { name: "黃正諭", alias: "", table: "第11桌", note: "面對舞台右側，中段" },
-        { name: "張國璋", alias: "", table: "第12桌", note: "面對舞台左側，中段" },
-        { name: "曾偉杰", alias: "", table: "第12桌", note: "面對舞台左側，中段" },
-        { name: "劉純情", alias: "", table: "第12桌", note: "面對舞台左側，中段" },
-        { name: "張俊哲", alias: "", table: "第12桌", note: "面對舞台左側，中段" },
-        { name: "孫景裕", alias: "", table: "第12桌", note: "面對舞台左側，中段" },
-        { name: "蔡洪鵬", alias: "", table: "第12桌", note: "面對舞台左側，中段" },
-        { name: "蘇怡梵", alias: "", table: "第12桌", note: "面對舞台左側，中段" },
-        { name: "黃馨蔆", alias: "", table: "第12桌", note: "面對舞台左側，中段" },
-        { name: "陳益火", alias: "", table: "第13桌", note: "面對舞台右側，靠近舞台" },
-        { name: "陳敬鎔", alias: "", table: "第13桌", note: "面對舞台右側，靠近舞台" },
-        { name: "陳敬霓", alias: "", table: "第13桌", note: "面對舞台右側，靠近舞台" },
-        { name: "陳益成", alias: "", table: "第13桌", note: "面對舞台右側，靠近舞台" },
-        { name: "陳文建", alias: "", table: "第13桌", note: "面對舞台右側，靠近舞台" },
-        { name: "四叔堂弟", alias: "", table: "第13桌", note: "面對舞台右側，靠近舞台" },
-        { name: "四叔堂弟", alias: "", table: "第13桌", note: "面對舞台右側，靠近舞台" },
-        { name: "周偉", alias: "昆山", table: "第14桌", note: "面對舞台左側，近入口處" },
-        { name: "蔣永新", alias: "泰國", table: "第14桌", note: "面對舞台左側，近入口處" },
-        { name: "王炳和", alias: "越南", table: "第14桌", note: "面對舞台左側，近入口處" },
-        { name: "劉賢哲", alias: "", table: "第14桌", note: "面對舞台左側，近入口處" },
-        { name: "陳明軒", alias: "", table: "第14桌", note: "面對舞台左側，近入口處" },
-        { name: "陳正育", alias: "", table: "第14桌", note: "面對舞台左側，近入口處" },
-        { name: "李智偉", alias: "", table: "第14桌", note: "面對舞台左側，近入口處" },
-        { name: "謝瑞文", alias: "", table: "第14桌", note: "面對舞台左側，近入口處" },
-        { name: "黃淑芬", alias: "", table: "第15桌", note: "面對舞台右側，中段" },
-        { name: "馮湘芸", alias: "", table: "第15桌", note: "面對舞台右側，中段" },
-        { name: "馮品臻", alias: "", table: "第15桌", note: "面對舞台右側，中段" },
-        { name: "馮祐維", alias: "", table: "第15桌", note: "面對舞台右側，中段" },
-        { name: "馮致華", alias: "", table: "第15桌", note: "面對舞台右側，中段" },
-        { name: "陳培菁", alias: "", table: "第15桌", note: "面對舞台右側，中段" },
-        { name: "馮品瑄", alias: "", table: "第15桌", note: "面對舞台右側，中段" },
-        { name: "馮金鐸", alias: "外公", table: "第15桌", note: "面對舞台右側，中段" },
-        { name: "李笑", alias: "外婆", table: "第15桌", note: "面對舞台右側，中段" },
-        { name: "蘇小燕", alias: "二姨", table: "第16桌", note: "面對舞台左側，靠近舞台" },
-        { name: "林勝景", alias: "二姨丈", table: "第16桌", note: "面對舞台左側，靠近舞台" },
-        { name: "林巧容", alias: "", table: "第16桌", note: "面對舞台左側，靠近舞台" },
-        { name: "林農翔", alias: "", table: "第16桌", note: "面對舞台左側，靠近舞台" },
-        { name: "曾瑀甄", alias: "嫂嫂", table: "第16桌", note: "面對舞台左側，靠近舞台" },
-        { name: "蘇美惠", alias: "小阿姨", table: "第16桌", note: "面對舞台左側，靠近舞台" },
-        { name: "李妮", alias: "", table: "第16桌", note: "面對舞台左側，靠近舞台" },
-        { name: "蘇雅珍", alias: "大姨", table: "第16桌", note: "面對舞台左側，靠近舞台" },
-        { name: "謝識明", alias: "大姨丈", table: "第16桌", note: "面對舞台左側，靠近舞台" },
-        { name: "謝武宏", alias: "", table: "第16桌", note: "面對舞台左側，靠近舞台" },
-        { name: "王舜儀", alias: "", table: "第17桌", note: "面對舞台右側，中段" },
-        { name: "蘇永益", alias: "", table: "第17桌", note: "面對舞台右側，中段" },
-        { name: "顏麗真", alias: "", table: "第17桌", note: "面對舞台右側，中段" },
-        { name: "林定國", alias: "", table: "第17桌", note: "面對舞台右側，中段" },
-        { name: "呂美妹", alias: "", table: "第17桌", note: "面對舞台右側，中段" },
-        { name: "謝佳恩", alias: "Joann", table: "第18桌", note: "面對舞台左側，中段" },
-        { name: "何山", alias: "Shan", table: "第18桌", note: "面對舞台左側，中段" },
-        { name: "康博凱", alias: "Joe", table: "第18桌", note: "面對舞台左側，中段" },
-        { name: "黃傑洛", alias: "Gerald", table: "第18桌", note: "面對舞台左側，中段" },
-        { name: "林芸卉", alias: "小舅媽", table: "第18桌", note: "面對舞台左側，中段" },
-        { name: "蘇安榕", alias: "", table: "第18桌", note: "面對舞台左側，中段" },
-        { name: "許家豪", alias: "", table: "第18桌", note: "面對舞台左側，中段" },
-        { name: "許庭瑋", alias: "", table: "第18桌", note: "面對舞台左側，中段" },
-        { name: "蘇美珠", alias: "", table: "第19桌", note: "面對舞台右側，近入口處" },
-        { name: "林英照", alias: "", table: "第19桌", note: "面對舞台右側，近入口處" },
-        { name: "詹竣雄", alias: "", table: "第19桌", note: "面對舞台右側，近入口處" },
-        { name: "陳宛怡", alias: "", table: "第19桌", note: "面對舞台右側，近入口處" },
-        { name: "秦宏鈞", alias: "", table: "第19桌", note: "面對舞台右側，近入口處" },
-        { name: "戴煥忠", alias: "", table: "第19桌", note: "面對舞台右側，近入口處" },
-        { name: "楊明華", alias: "品青", table: "第19桌", note: "面對舞台右側，近入口處" },
-        { name: "游賢智", alias: "宜蘭", table: "第20桌", note: "面對舞台左側，近入口處" },
-        { name: "劉嘉蕙", alias: "品青", table: "第20桌", note: "面對舞台左側，近入口處" },
-        { name: "楊昭鳳", alias: "", table: "第20桌", note: "面對舞台左側，近入口處" },
-        { name: "曾淑苹", alias: "", table: "第20桌", note: "面對舞台左側，近入口處" },
-        { name: "林聖偉", alias: "", table: "第20桌", note: "面對舞台左側，近入口處" },
-        { name: "蔡崇昌", alias: "", table: "第20桌", note: "面對舞台左側，近入口處" },
-        { name: "蔡華娟", alias: "", table: "第21桌", note: "面對舞台右側，靠近舞台" },
-        { name: "王美玲", alias: "", table: "第21桌", note: "面對舞台右側，靠近舞台" },
-        { name: "吳雅蘋", alias: "", table: "第21桌", note: "面對舞台右側，靠近舞台" },
-        { name: "陳宜君", alias: "", table: "第21桌", note: "面對舞台右側，靠近舞台" },
-        { name: "張桂蘭", alias: "", table: "第21桌", note: "面對舞台右側，靠近舞台" },
-        { name: "陳妙姍", alias: "", table: "第21桌", note: "面對舞台右側，靠近舞台" },
-        { name: "江文火", alias: "", table: "第21桌", note: "面對舞台右側，靠近舞台" },
-        { name: "傅景煌", alias: "", table: "第22桌", note: "面對舞台左側，靠近舞台" },
-        { name: "王上銘", alias: "", table: "第22桌", note: "面對舞台左側，靠近舞台" },
-        { name: "林育鋒", alias: "", table: "第22桌", note: "面對舞台左側，靠近舞台" },
-        { name: "黃奕融", alias: "", table: "第22桌", note: "面對舞台左側，靠近舞台" },
-        { name: "呂香蓮", alias: "", table: "第22桌", note: "面對舞台左側，靠近舞台" },
-        { name: "陳昭訓", alias: "右昌", table: "第23桌", note: "面對舞台右側，中段" },
-        { name: "陳裕明", alias: "右昌", table: "第23桌", note: "面對舞台右側，中段" },
-        { name: "林緯城", alias: "廣鑫", table: "第23桌", note: "面對舞台右側，中段" },
-        { name: "張心合", alias: "廣鑫", table: "第23桌", note: "面對舞台右側，中段" },
-        { name: "陳翊庭", alias: "矽銳", table: "第23桌", note: "面對舞台右側，中段" },
-        { name: "王培鈴", alias: "矽銳", table: "第23桌", note: "面對舞台右側，中段" },
-        { name: "陳民堯", alias: "", table: "第23桌", note: "面對舞台右側，中段" },
-        { name: "陳正利", alias: "", table: "第24桌", note: "面對舞台左側，中段" },
-        { name: "吳金炎", alias: "", table: "第24桌", note: "面對舞台左側，中段" },
-        { name: "劉進發", alias: "", table: "第24桌", note: "面對舞台左側，中段" },
-        { name: "林建福", alias: "", table: "第24桌", note: "面對舞台左側，中段" },
-        { name: "張明章", alias: "", table: "第24桌", note: "面對舞台左側，中段" },
-        { name: "饒紅炫", alias: "", table: "第24桌", note: "面對舞台左側，中段" },
-        { name: "陳錦隆", alias: "", table: "第24桌", note: "面對舞台左側，中段" },
-        { name: "劉凱毓", alias: "", table: "第25桌", note: "面對舞台右側，近入口處" },
-        { name: "馬斯利", alias: "", table: "第25桌", note: "面對舞台右側，近入口處" },
-        { name: "吳多莫", alias: "", table: "第25桌", note: "面對舞台右側，近入口處" },
-        { name: "凡迪", alias: "", table: "第25桌", note: "面對舞台右側，近入口處" },
-        { name: "古萬多", alias: "", table: "第25桌", note: "面對舞台右側，近入口處" },
-        { name: "瓦斯諾", alias: "", table: "第25桌", note: "面對舞台右側，近入口處" },
-        { name: "阿迪亞", alias: "", table: "第25桌", note: "面對舞台右側，近入口處" },
-        { name: "王仁彥", alias: "", table: "第25桌", note: "面對舞台右側，近入口處" },
-        { name: "張榮福", alias: "", table: "第25桌", note: "面對舞台右側，近入口處" },
-        { name: "曾長海", alias: "", table: "第26桌", note: "面對舞台左側，近入口處" },
-        { name: "陳定向", alias: "", table: "第26桌", note: "面對舞台左側，近入口處" },
-        { name: "許國恩", alias: "", table: "第26桌", note: "面對舞台左側，近入口處" },
-        { name: "沈漢聰", alias: "", table: "第26桌", note: "面對舞台左側，近入口處" },
-        { name: "陳法學", alias: "", table: "第26桌", note: "面對舞台左側，近入口處" },
-        { name: "洪英凱", alias: "", table: "第26桌", note: "面對舞台左側，近入口處" },
-        { name: "王祥學", alias: "", table: "第26桌", note: "面對舞台左側，近入口處" }
-    ];
-
-    // 搜尋核心邏輯 (支援多筆匹配、大小寫不限)
-    function searchSeat() {
-        const inputEl = document.getElementById('guestNameInput');
-        const resultDiv = document.getElementById('searchResult');
-        const query = inputEl.value.trim().toLowerCase();
-
-        if (!query) {
-            resultDiv.innerHTML = `<div style="color: var(--accent-color); font-size: 0.9rem;">請先輸入姓名或英文名字喔！</div>`;
-            return;
-        }
-
-        // 搜尋匹配項目
-        const matches = seatingData.filter(guest => {
-            const name = (guest.name || '').toLowerCase();
-            const alias = (guest.alias || '').toLowerCase();
-            return name.includes(query) || alias.includes(query);
-        });
-
-        // 渲染結果
-        if (matches.length > 0) {
-            resultDiv.innerHTML = matches.map(match => {
-                const displayName = match.alias 
-                    ? `${match.name || ''} <span style="font-size:0.85em; font-weight:normal; color:var(--text-muted);">(${match.alias})</span>`
-                    : match.name;
-
-                return `
-                    <div class="seat-result-card">
-                        <div style="font-size: 0.9rem; color: var(--text-muted);">親愛的 <strong>${displayName}</strong> 您好：</div>
-                        <div class="seat-table-highlight">
-                            您的桌號為：【 ${match.table || '確認中'} 】
-                        </div>
-                        ${match.note ? `<div class="seat-note">📍 位置指引：${match.note}</div>` : ''}
-                    </div>
-                `;
-            }).join('');
-        } else {
-            resultDiv.innerHTML = `
-                <div style="color: var(--text-muted); font-size: 0.9rem; max-width: 400px; margin: 0 auto;">
-                    查無「<strong>${inputEl.value.trim()}</strong>」的座位資訊。<br>
-                    <span style="font-size: 0.8rem; display: block; margin-top: 5px;">請嘗試輸入中文全名、英文名，或洽現場接待人員。</span>
-                </div>
-            `;
-        }
-    }        
+     
 </script>
 
 </body>
